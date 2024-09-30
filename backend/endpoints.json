@@ -1,0 +1,10 @@
+{
+    "/api": {
+      "GET": {
+        "description": "serves a json of available endpoints of the api",
+        "queries": [],
+        "exampleResponse": {
+          "endpoints": []
+        }
+      }
+    }}
