@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import useFetch from '../hooks/useFetch'
+import Button from './Button'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const Container = styled.div`
 flex: 1 1 calc(25% - 16px);
@@ -26,8 +28,12 @@ const Img = styled.img`
 max-width: 100%`
 
 
+interface ArtworkCardProps {
+    artwork: any
+    onClick: () => void
+  }
 
-const ArtworkCard: React.FC<{artwork: Record<string, any>}> = ({ artwork }) => {
+const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick }) => {
 const [imageUrl, setImageUrl] = useState<string | null>(null)
 const {data, error} = useFetch<any>(`https://api.artic.edu/api/v1/artworks/${artwork.id}?fields=id,title,image_id,artist_title,[is_public_domain]=true`)
 
@@ -46,6 +52,7 @@ return data ? <Container>
           {imageUrl ? <Img src={imageUrl} alt={artwork.title} /> : <></>}
           <h2>{artwork.title}</h2>
           <h3>{data.data.artist_title}</h3>
+          <Button icon={faHeart} onClick={onClick}/>
         </Container>
 : <></>
 
