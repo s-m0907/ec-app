@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useFetch from './hooks/useFetch'
+import useFetch from '../hooks/useFetch'
 
 const Container = styled.div`
 flex: 1 1 calc(25% - 16px);
