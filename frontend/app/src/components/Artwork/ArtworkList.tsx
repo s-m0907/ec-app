@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import ArtworkCard from './ArtworkCard'
-import Modal from './Modal'
+import Modal from '../Common/Modal'
 import { useState } from 'react'
 import AddArtwork from './AddArtwork'
-import useModal from '../hooks/useModal'
+import useModal from '../../hooks/useModal'
 
 const Grid = styled.div`
 display: flex;

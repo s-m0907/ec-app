@@ -2,10 +2,10 @@ import React from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/Auth'
-import Header from './components/Header'
-import Home from './components/Home'
-import SignIn from './components/SignIn'
-import BrowseArtworks from './components/BrowseArtworks'
+import Header from './components/Layout/Header'
+import Home from './components/Home/Home'
+import SignIn from './components/Auth/SignIn'
+import BrowseArtworks from './components/Artwork/BrowseArtworks'
 
 const App: React.FC = () => {
 
@@ -20,9 +20,7 @@ const App: React.FC = () => {
                 </Routes>
             </Router>
         </AuthProvider>
-    );
-};
-
-
+    )
+}
 
 export default App;

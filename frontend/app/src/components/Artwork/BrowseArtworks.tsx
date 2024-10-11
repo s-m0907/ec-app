@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import useFetch from "../hooks/useFetch"
+import useFetch from "../../hooks/useFetch"
 import ArtworkList from "./ArtworkList"
-import SearchBar from "./SearchBar"
+import SearchBar from "../Common/SearchBar"
 
 const BrowseArtworks: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('')
