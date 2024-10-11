@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import useFetch from "../hooks/useFetch"
 import ArtworkList from "./ArtworkList"
 import SearchBar from "./SearchBar"
-import LogoutButton from "./SignOut"
 
 const BrowseArtworks: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('')
@@ -25,7 +24,6 @@ const BrowseArtworks: React.FC = () => {
     }
 
       return <>
-      <LogoutButton/>
       <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange}/>
       {error && <>Error: {error}</>}
       {!data ? (
