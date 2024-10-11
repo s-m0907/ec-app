@@ -52,7 +52,7 @@ return data ? <Container>
           {imageUrl ? <Img src={imageUrl} alt={artwork.title} /> : <></>}
           <h2>{artwork.title}</h2>
           <h3>{data.data.artist_title}</h3>
-          <Button icon={faHeart} onClick={onClick}/>
+          <Button radius='pill' icon={faHeart} onClick={onClick}/>
         </Container>
 : <></>
 

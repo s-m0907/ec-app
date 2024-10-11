@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import ArtworkCard from './ArtworkCard'
 import Modal from './Modal'
 import { useState } from 'react'
+import AddArtwork from './AddArtwork'
+import useModal from '../hooks/useModal'
 
 const Grid = styled.div`
 display: flex;
@@ -16,15 +18,14 @@ interface ArtworkListProps {
 }
 
 const ArtworkList: React.FC<ArtworkListProps> = ({ artworks }) => {
-const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+const [selectedArtwork, setSelectedArtwork] = useState({})
+const { open, isOpen, close } = useModal()
 
-    const handleOpenModal = (item: any) => {
-        setIsModalOpen(true)
+    const handleOpenModal = (artwork: any) => {
+      setSelectedArtwork(artwork)
+      open()
       }
-    
-      const handleCloseModal = () => {
-        setIsModalOpen(false)
-      }
+
 
     return<>
     <Grid>
@@ -32,9 +33,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
             return <ArtworkCard key={artwork.id} artwork={artwork} onClick={() => handleOpenModal(artwork)}/>
         })}
     </Grid>
-    {isModalOpen && (
-    <Modal onClose={handleCloseModal}/>
-)}
+    <Modal isOpen={isOpen} close={close} content={<AddArtwork selectedArtwork={selectedArtwork} onClose={close} />} />
     </>
 }
 

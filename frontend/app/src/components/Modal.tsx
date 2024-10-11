@@ -41,16 +41,25 @@ cursor: pointer;
 `
 
 interface ModalProps {
-    onClose: () => void
+  isOpen: boolean
+  close: () => void
+  content: React.ReactNode | ((close: () => void) => React.ReactNode)
   }
 
-const Modal: React.FC<ModalProps> = ({onClose}) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, close, content }) => {
+if (!isOpen) return null
 
-return <ModalOverlay>
-<ModalContent>
-    <ModalClose onClick={onClose}>{<FontAwesomeIcon icon={faXmark} size="lg" />}</ModalClose>
-</ModalContent>
+const renderedContent = typeof content === 'function' ? content(close) : content
+
+return (
+<ModalOverlay>
+    <ModalContent>
+      {renderedContent}
+        <ModalClose onClick={close}>
+          <FontAwesomeIcon icon={faXmark} size="lg" />
+        </ModalClose>
+    </ModalContent>
 </ModalOverlay>
-}
+)}
 
 export default Modal
