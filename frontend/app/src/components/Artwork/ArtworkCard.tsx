@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useFetch from '../hooks/useFetch'
-import Button from './Button'
+import useFetch from '../../hooks/useFetch'
+import Button from '../Common/Button'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const Container = styled.div`

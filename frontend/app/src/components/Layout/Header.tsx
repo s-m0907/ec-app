@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { getAuth, signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from "../contexts/Auth"
+import { useAuth } from "../../contexts/Auth"
 import Nav from './Nav'
-import Button from './Button'
+import Button from '../Common/Button'
 
 
 const StyledHeader = styled.header`

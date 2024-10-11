@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { Exhibition, addArtwork, getExhibitions } from "../firebase"
+import { Exhibition, addArtwork, getExhibitions } from "../../firebase"
 import styled from 'styled-components'
-import Button from "./Button"
+import Button from "../Common/Button"
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from "../contexts/Auth"
+import { useAuth } from "../../contexts/Auth"
 import { Navigate } from "react-router-dom"
 
 const Wrapper = styled.div`
@@ -50,10 +50,8 @@ const AddArtwork: React.FC<AddArtworkProps> = ({ selectedArtwork, onClose }) => 
         const fetchExhibitions = async () => {
             if (user) {
                 try {
-                    console.log(user)
                     const data = await getExhibitions(user.uid)
                     setExhibitions(data || [])
-                    console.log(exhibitions)
                 } catch (error: any) {
                     console.error("Error fetching exhibitions", error)
                 }
