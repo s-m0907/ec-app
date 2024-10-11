@@ -6,7 +6,8 @@ export const signUp = async (email: string, password: string, username: string) 
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     const user = userCredential.user
-    await addUser(username, email)
+    const uid = user.uid
+    await addUser(username, email, uid)
       return user
   } catch (error: any) {
     throw new Error(error.message)

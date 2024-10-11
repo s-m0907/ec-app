@@ -83,7 +83,7 @@ const SignIn: React.FC = () => {
         }
         const user = await signIn(email, password)
         console.log('User signed in:', user)
-        navigate('/')
+        navigate('/browse-artworks')
         
     } catch(err: any) {
         setError(err.message)

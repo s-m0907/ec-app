@@ -1,13 +1,13 @@
-import { collection, addDoc, doc, getDocs, setDoc, arrayUnion } from "firebase/firestore"
+import { collection, doc, getDocs, setDoc, arrayUnion } from "firebase/firestore"
 import { db } from "./firebaseConfig"
 
-export const addUser = async(username: string, email: string) => {
+export const addUser = async(username: string, email: string, uid: string) => {
 try{
-  const docRef = await addDoc(collection(db, "users"), {
+  const docRef = await setDoc(doc(db, "users", uid), {
     username: username,
     email: email
   })
-  console.log("User document written with ID: ", docRef.id)
+  console.log("User document written with ID: ", docRef)
 } catch (e) {
   console.error("Error adding document: ", e)
 }

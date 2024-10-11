@@ -3,6 +3,8 @@ import { Exhibition, addArtwork, getExhibitions } from "../firebase"
 import styled from 'styled-components'
 import Button from "./Button"
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from "../contexts/Auth"
+import { Navigate } from "react-router-dom"
 
 const Wrapper = styled.div`
 display: flex;
@@ -41,28 +43,42 @@ const AddArtwork: React.FC<AddArtworkProps> = ({ selectedArtwork, onClose }) => 
     const [exhibitionName, setExhibitionName] = useState('')
     const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false)
     const [error, setError] = useState('')
+    const { user } = useAuth()
 
-    const userId = process.env.REACT_APP_FIRESTORE_USER_ID
-
+    
     useEffect(() => {
         const fetchExhibitions = async () => {
-            try {
-                const data = await getExhibitions(userId)
-                setExhibitions(data || [])
-            } catch (error: any) {
-                console.error("Error fetching exhibitions", error)
+            if (user) {
+                try {
+                    console.log(user)
+                    const data = await getExhibitions(user.uid)
+                    setExhibitions(data || [])
+                    console.log(exhibitions)
+                } catch (error: any) {
+                    console.error("Error fetching exhibitions", error)
+                }
             }
         }
         fetchExhibitions()
     },[])
 
+    if(!user) {
+        return <Navigate to='sign-in'/>
+    }
+
     const handleAdd = async (exhibitionName: string) => {
         if (!exhibitionName.trim()) {
             setError('Exhibition name cannot be empty.')
+            return 
+        }
+
+        if (!user) {
+            setError('You must be logged in to add artwork.')
             return
         }
+
         try {
-            await addArtwork(userId, exhibitionName, selectedArtwork.id)
+            await addArtwork(user.uid, exhibitionName, selectedArtwork.id)
             alert(`${selectedArtwork.title} was added to ${exhibitionName}`)
             resetForm()
             onClose()
