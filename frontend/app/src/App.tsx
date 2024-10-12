@@ -6,6 +6,7 @@ import Header from './components/Layout/Header'
 import Home from './components/Home/Home'
 import SignIn from './components/Auth/SignIn'
 import BrowseArtworks from './components/Artwork/BrowseArtworks'
+import ExhibitionsPage from './components/Exhibitions/ExhibitionsPage'
 
 const App: React.FC = () => {
 
@@ -16,6 +17,7 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path = '/' element={<Home/>}/>
                     <Route path = '/browse-artworks' element = {<BrowseArtworks/>}/>
+                    <Route path = '/:userId/exhibitions' element = {<ExhibitionsPage/>}/>
                     <Route path = '/sign-in' element={<SignIn/>}/>
                 </Routes>
             </Router>

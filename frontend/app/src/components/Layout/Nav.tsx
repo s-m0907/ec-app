@@ -5,9 +5,14 @@ const StyledNav = styled.div`
   font-size: 18px;
   margin: 0;
   text-align: right;
-`;
+`
 
-const Nav: React.FC = () => {
+interface NavProps {
+  userId: string
+}
+
+const Nav: React.FC<NavProps> = ({userId}) => {
+
   return (
     <StyledNav>
       <Link
@@ -20,7 +25,7 @@ const Nav: React.FC = () => {
       >
         Browse Artworks
       </Link>
-      <Link to=""
+      <Link to={`/${userId}/exhibitions`}
               style={{
                 padding: "5px",
                 textDecoration: "none",

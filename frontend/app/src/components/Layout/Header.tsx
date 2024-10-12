@@ -33,7 +33,7 @@ const Header: React.FC = () => {
 if(user){
     return <StyledHeader>
     <Title>Exhibition Curator</Title>
-    <Nav/>
+    <Nav userId={user.uid}/>
     <Button onClick={handleLogout} body={"Sign out"}/>
 </StyledHeader>
 } else{
