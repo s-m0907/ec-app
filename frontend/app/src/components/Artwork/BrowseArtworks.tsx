@@ -35,7 +35,7 @@ const BrowseArtworks: React.FC = () => {
           if (artworks.length === 0) {
             return <div>No Artworks Found</div>
           }
-          return <ArtworkList artworks={artworks} />
+          return <ArtworkList artworks={artworks}/>
         })()
       )}
       </>

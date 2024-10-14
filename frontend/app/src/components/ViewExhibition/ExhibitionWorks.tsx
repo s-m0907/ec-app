@@ -1,9 +1,11 @@
 import styled from 'styled-components'
-import ArtworkCard from './ArtworkCard'
+
 import Modal from '../Common/Modal'
 import { useState } from 'react'
-import AddArtwork from './AddArtwork'
+
 import useModal from '../../hooks/useModal'
+import ArtworkDetail from './ArtworkDetail'
+import ArtworkCard from '../Artwork/ArtworkCard'
 
 const Grid = styled.div`
 display: flex;
@@ -13,11 +15,11 @@ gap: 16px;
 padding: 16px
 `
 
-interface ArtworkListProps {
+interface ExhibitionWorksProps {
   artworks: Record<string, any>[]
 }
 
-const ArtworkList: React.FC<ArtworkListProps> = ({ artworks }) => {
+const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artworks }) => {
 const [selectedArtwork, setSelectedArtwork] = useState({})
 const { open, isOpen, close } = useModal()
 
@@ -30,11 +32,11 @@ const { open, isOpen, close } = useModal()
     return<>
     <Grid>
         {artworks.map((artwork: any) => {
-            return <ArtworkCard key={artwork.id} artwork={artwork} onClick={() => handleOpenModal(artwork)} variant={'browse'}/>
+            return <ArtworkCard key={artwork.id} artwork={artwork} onClick={() => handleOpenModal(artwork)} variant={'exhibition'}/>
         })}
     </Grid>
-    <Modal isOpen={isOpen} close={close} content={<AddArtwork selectedArtwork={selectedArtwork} onClose={close} />} />
+    <Modal isOpen={isOpen} close={close} content={<ArtworkDetail selectedArtwork={selectedArtwork}/>} />
     </>
 }
 
-export default ArtworkList
+export default ExhibitionWorks
