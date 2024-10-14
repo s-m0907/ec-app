@@ -3,10 +3,10 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/Auth'
 import Header from './components/Layout/Header'
-import Home from './components/Home/Home'
 import SignIn from './components/Auth/SignIn'
 import BrowseArtworks from './components/Artwork/BrowseArtworks'
 import ExhibitionsPage from './components/Exhibitions/ExhibitionsPage'
+import ExhibitionPage from './components/ViewExhibition/ExhibitionPage'
 
 const App: React.FC = () => {
 
@@ -15,10 +15,11 @@ const App: React.FC = () => {
             <Router>
             <Header/>
                 <Routes>
-                    <Route path = '/' element={<Home/>}/>
+                    <Route path = '/' element={<SignIn/>}/>
+                    <Route path = '/sign-in' element={<SignIn/>}/>
                     <Route path = '/browse-artworks' element = {<BrowseArtworks/>}/>
                     <Route path = '/:userId/exhibitions' element = {<ExhibitionsPage/>}/>
-                    <Route path = '/sign-in' element={<SignIn/>}/>
+                    <Route path= '/:userId/exhibitions/:exhibition_name' element={<ExhibitionPage/>}/>
                 </Routes>
             </Router>
         </AuthProvider>

@@ -3,6 +3,7 @@ import styled from "styled-components"
 import CardImage from "./CardImage"
 import useFetch from "../../hooks/useFetch"
 import { useEffect, useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 
 const Container = styled.div`
 flex: 1 1 calc(25% - 16px);
@@ -55,6 +56,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({exhibition}) => {
     const idString = exhibition.artwork_ids.join(',')
     const {data, error} = useFetch<any>(`https://api.artic.edu/api/v1/artworks?ids=${idString}0&fields=id,title,image_id`)
     const [imageIds, setImageIds] = useState<string[]>([])
+    const location = useLocation()
 
     useEffect(() => {
         if (data && data.data) {
@@ -65,13 +67,17 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({exhibition}) => {
             }
     }, [data])
 
+    const exhibitionUrl = `${location.pathname}/${exhibition.exhibition_name}`
+
     if(imageIds.length !== 0) {
     return <Container>
+        <Link to={exhibitionUrl} state={{ exhibition: exhibition }}>
         <ImageGrid>
         {imageIds.map((imageId, index) => {
             return <CardImage imageId={imageId} url={data.config.iiif_url} index={index}/>
         })}
         </ImageGrid>
+        </Link>
         <Footer>
         <Title>{exhibition.exhibition_name}</Title>
         <p>{data.data.length} artworks</p>
