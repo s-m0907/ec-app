@@ -3,11 +3,26 @@ import { RESTDataSource } from '@apollo/datasource-rest';
 class VaAPI extends RESTDataSource {
   override baseURL = 'https://api.vam.ac.uk/v2/'
 
-  async searchArtworks(searchTerm: string): Promise<any> {
+  async getArtworks(limit: number, page: number): Promise<any> {
+    const data = await this.get('objects/search', {
+      params: {
+        images_exist: '1',
+        data_restrict: 'descriptive_only',
+        on_display_at: 'all',
+        page_size: `${limit}`,
+        page: `${page}`,
+      }
+    })
+      return data.records
+  }
+
+  async searchArtworks(searchTerm: string, limit: number, page: number): Promise<any> {
     const data = await this.get('objects/search', {
         params: {
           q_object_name: `${searchTerm}`,
-          images_exist: '1'
+          images_exist: '1',
+          page_size: `${limit}`,
+          page: `${page}`,
         },
       })
       return data.records

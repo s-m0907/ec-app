@@ -8,18 +8,17 @@ type Images {
 }
 
 type Artwork {
-    id: ID!
+    id: ID
     title: String
     artist: String
     medium: String
     date: String
     images: Images
+    api: String
   }
 
   type Query {
-    artworks: [Artwork]
-    searchArtworks(searchTerm: String): [Artwork]
+    artworks(searchTerm: String, limit: Int, page: Int): [Artwork]
   }
 `
-
 export default typeDefs
