@@ -19,13 +19,20 @@ class VaAPI extends RESTDataSource {
   async searchArtworks(searchTerm: string, limit: number, page: number): Promise<any> {
     const data = await this.get('objects/search', {
         params: {
-          q_object_name: `${searchTerm}`,
           images_exist: '1',
+          data_restrict: 'descriptive_only',
+          on_display_at: 'all',
+          q_object_name: `${searchTerm}`,
           page_size: `${limit}`,
           page: `${page}`,
         },
       })
       return data.records
+  }
+
+  async getArtwork(id: string): Promise<any> {
+    const data = await this.get(`museumobject/${id}`)
+    return data
   }
 }
 

@@ -1,4 +1,4 @@
-import { mapArtwork } from './utils/artworkMappers.js';
+import { mapArtwork, mapArtworkDetail } from './utils/artworkMappers.js';
 
 const resolvers = {
   Query: {
@@ -15,13 +15,28 @@ const resolvers = {
 
         const aicArtworks = aicData.map(item => mapArtwork(item, 'aic'));
         const vaArtworks = vaData.map(item => mapArtwork(item, 'v&a'));
-
+        
         return [...aicArtworks, ...vaArtworks];
       } catch (error) {
         console.error("Error fetching artworks:", error);
         throw new Error("Failed to fetch artworks");
       }
     },
+
+    artwork: async (_, { id , api }, { dataSources }) => {
+      try {
+        if(api === 'aic') {
+          const artworkDetail = await dataSources.aicApi.getArtwork(id)
+          return mapArtworkDetail(artworkDetail, api)
+        } else if (api === 'v&a') {
+          const artworkDetail = await dataSources.vaApi.getArtwork(id)
+          return mapArtworkDetail(artworkDetail, api)
+        }
+      } catch (error) {
+        console.error("Error fetching artwork:", error)
+        throw new Error("Failed to fetch artworks")
+      }
+    }
   },
 };
 
