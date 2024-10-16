@@ -1,7 +1,7 @@
-export const mapArtwork = (item, source) => {
+export const mapArtwork = (data: any, source: string, config?: any) => {
   switch (source) {
     case 'aic': {
-      const { id, title, artist_title, medium_display, date_display, thumbnail } = item
+      const { id, title, artist_title, medium_display, date_display, thumbnail, image_id } = data;
       return {
         id,
         title,
@@ -11,13 +11,14 @@ export const mapArtwork = (item, source) => {
         images: {
           lqip: thumbnail?.lqip || null,
           alt_text: thumbnail?.alt_text || null,
+          iiif_url: `${config.iiif_url}/${image_id}/full/843,/0/default.jpg`,
         },
         api: 'aic',
-      }
+      };
     }
 
     case 'v&a': {
-      const { systemNumber, _primaryTitle, _primaryMaker, objectType, _primaryDate, _images } = item
+      const { systemNumber, _primaryTitle, _primaryMaker, objectType, _primaryDate, _images } = data;
       return {
         id: systemNumber,
         title: _primaryTitle,
@@ -26,9 +27,10 @@ export const mapArtwork = (item, source) => {
         date: _primaryDate,
         images: {
           thumbnail: _images?._primary_thumbnail || null,
+          iiif_url: `${_images?._iiif_image_base_url}full/full/0/default.jpg` || null,
         },
         api: 'v&a',
-      }
+      };
     }
 
     default:
@@ -36,7 +38,7 @@ export const mapArtwork = (item, source) => {
   }
 };
 
-export const mapArtworkDetail = (item, source) => {
+export const mapArtworkDetail = (item: any, source: string) => {
   switch (source) {
     case 'aic': {
       const { data, config } = item
