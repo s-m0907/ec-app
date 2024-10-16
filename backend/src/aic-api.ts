@@ -7,23 +7,23 @@ class AicAPI extends RESTDataSource {
     const data = await this.get('artworks', {
       params: {
         limit: `${limit}`,
-        fields: 'id,artist_title,title,date_display,thumbnail,medium_display',
+        fields: 'id,artist_title,title,date_display,thumbnail,medium_display,image_id',
         page: `${page}`
       }
     })
-      return data.data
+      return data
   }
 
   async searchArtworks(searchTerm: string, limit: number, page: number): Promise<any> {
     const data = await this.get('artworks/search', {
         params: {
           q: searchTerm,
-          fields: 'id,artist_title,title,date_display,thumbnail,medium_display',
+          fields: 'id,artist_title,title,date_display,thumbnail,medium_display,image_id',
           limit: `${limit}`,
           page: `${page}`
         }
       })
-      return data.data
+      return data
   }
 
   async getArtwork(id: number): Promise<any> {

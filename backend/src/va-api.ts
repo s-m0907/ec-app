@@ -13,7 +13,7 @@ class VaAPI extends RESTDataSource {
         page: `${page}`,
       }
     })
-      return data.records
+      return data
   }
 
   async searchArtworks(searchTerm: string, limit: number, page: number): Promise<any> {
@@ -27,7 +27,7 @@ class VaAPI extends RESTDataSource {
           page: `${page}`,
         },
       })
-      return data.records
+      return data
   }
 
   async getArtwork(id: string): Promise<any> {
