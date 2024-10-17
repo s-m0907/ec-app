@@ -1,13 +1,34 @@
 import { useEffect, useState } from "react"
-import useFetch from "../../hooks/useFetch"
 import ArtworkList from "./ArtworkList"
 import SearchBar from "../Common/SearchBar"
+import { useQuery, gql } from '@apollo/client'
 
 const BrowseArtworks: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm)
-    const { data, error } = useFetch<any>(`https://api.artic.edu/api/v1/artworks/search?q=${debouncedSearchTerm}`)
     
+  const GET_ARTWORKS = gql`
+  query Artworks($searchTerm: String!) {
+    artworks(searchTerm: $searchTerm) {
+      id
+      title
+      artist
+      medium
+      date
+      images {
+        lqip
+        alt_text
+        thumbnail
+        iiif_url
+      }
+      api
+    }
+  }
+  `
+
+  const { loading, error, data } = useQuery(GET_ARTWORKS, {
+    variables: { searchTerm: debouncedSearchTerm },})
+
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm)
@@ -20,17 +41,16 @@ const BrowseArtworks: React.FC = () => {
 
       const handleSearchChange = (term: string) => {
         setSearchTerm(term)
-        console.log(term)
     }
 
       return <>
       <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange}/>
       {error && <>Error: {error}</>}
-      {!data ? (
+      {loading ? (
         <div>Loading...</div>
       ) : (
         (() => {
-          const artworks = data.data
+          const artworks = data.artworks
 
           if (artworks.length === 0) {
             return <div>No Artworks Found</div>
