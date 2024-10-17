@@ -31,7 +31,7 @@ const ExhibitionsList: React.FC = () => {
             }
         }
         fetchExhibitions()
-    },[])
+    },[user])
 
     return <>
     <Info>{exhibitions.length} Exhibitions</Info>
