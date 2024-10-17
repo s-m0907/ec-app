@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { axiosInstance, cache } from '../api'
+import { axiosInstance, cache } from '../services/api'
 
 function useFetch<T>(url: string) {
   const [result, setResult] = useState<{ data: T | null; error: string | null }>({

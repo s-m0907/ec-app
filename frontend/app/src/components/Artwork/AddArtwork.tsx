@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { Exhibition, addArtwork, getExhibitions } from "../../firebase"
+import { addArtwork, getExhibitions } from "../../services/firebase"
 import styled from 'styled-components'
 import Button from "../Common/Button"
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../../contexts/Auth"
 import { Navigate } from "react-router-dom"
+import { Exhibition } from "../../types"
 
 const Wrapper = styled.div`
 display: flex;

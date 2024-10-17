@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
-import { Exhibition, getExhibitions } from "../../firebase"
 import { useAuth } from "../../contexts/Auth"
-import ExhibitionCard from "./ExhibitionCard"
+import { useEffect, useState } from "react"
+import { Exhibition } from "../../types"
+import { getExhibitions } from "../../services/firebase"
 import styled from "styled-components"
+import ExhibitionCard from "./ExhibitionCard"
 
 const Grid = styled.div`
 display: flex;

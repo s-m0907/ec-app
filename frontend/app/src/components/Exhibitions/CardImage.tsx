@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ArtworkId } from '../../firebase'
+import { ArtworkId } from '../../types'
 
 const Img = styled.img`
 width: 100%;
