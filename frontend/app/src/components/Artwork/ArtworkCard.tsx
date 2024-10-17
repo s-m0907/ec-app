@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useFetch from '../../hooks/useFetch'
 import Button from '../Common/Button'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
@@ -35,28 +33,13 @@ interface ArtworkCardProps {
   }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick, variant }) => {
-const [imageUrl, setImageUrl] = useState<string | null>(null)
-const {data, error} = useFetch<any>(`https://api.artic.edu/api/v1/artworks/${artwork.id}?fields=id,title,image_id,artist_title,[is_public_domain]=true`)
-
-useEffect(() => {
-    if (data && data.data && data.data.image_id) {
-        const url = `${data.config.iiif_url}/${data.data.image_id}/full/843,/0/default.jpg`
-        setImageUrl(url)
-    }
-}, [data])
-
-if (error) {
-    return <>Error: {error}</>
-  }
-
-return data ? <Container>
-          {imageUrl ? <Img src={imageUrl} alt={artwork.title} /> : <></>}
+return <Container>
+          <Img src={artwork.images.iiif_url} alt={artwork.images.alt_text || null} />
           <h2>{artwork.title}</h2>
-          <h3>{data.data.artist_title}</h3>
+          <h3>{artwork.artist}</h3>
+          <h4>{artwork.medium}</h4>
           {variant === 'exhibition' ? <></> : <Button radius='pill' icon={faHeart} onClick={onClick}/>}
         </Container>
-: <></>
-
 };
 
 export default ArtworkCard
