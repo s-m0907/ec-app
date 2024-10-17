@@ -2,14 +2,23 @@ import { useEffect, useState } from "react"
 import ArtworkList from "./ArtworkList"
 import SearchBar from "../Common/SearchBar"
 import { useQuery, gql } from '@apollo/client'
+import { Artwork } from "../../types"
+import Button from "../Common/Button"
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
+
+const ButtonWrapper = styled.div`
+display: flex;
+justify-content: center;`
 
 const BrowseArtworks: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm)
+    const [currentPage, setCurrentPage] = useState<number>(1)
     
   const GET_ARTWORKS = gql`
-  query Artworks($searchTerm: String!) {
-    artworks(searchTerm: $searchTerm) {
+  query Artworks($searchTerm: String!, $page: Int!) {
+    artworks(searchTerm: $searchTerm, page: $page) {
       id
       title
       artist
@@ -26,10 +35,10 @@ const BrowseArtworks: React.FC = () => {
   }
   `
 
-  const { loading, error, data } = useQuery(GET_ARTWORKS, {
-    variables: { searchTerm: debouncedSearchTerm },})
+    const { loading, error, data } = useQuery(GET_ARTWORKS, {
+      variables: { searchTerm: debouncedSearchTerm, page: currentPage },})
 
-    useEffect(() => {
+      useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm)
         }, 400)
@@ -39,26 +48,40 @@ const BrowseArtworks: React.FC = () => {
         };
     }, [searchTerm])
 
-      const handleSearchChange = (term: string) => {
-        setSearchTerm(term)
-    }
+    const artworks: Artwork[] = data?.artworks ?? [];
+    
+    const handleSearchChange = (term: string) => {
+      setSearchTerm(term)
+      setCurrentPage(1)
+    };
+
 
       return <>
       <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange}/>
-      {error && <>Error: {error}</>}
+      {error && <>Error: {error.message}</>}
       {loading ? (
         <div>Loading...</div>
+      ) : artworks.length === 0 ? (
+        <div>No Artworks Found</div>
       ) : (
-        (() => {
-          const artworks = data.artworks
-
-          if (artworks.length === 0) {
-            return <div>No Artworks Found</div>
-          }
-          return <ArtworkList artworks={artworks}/>
-        })()
-      )}
-      </>
-}
+      <ArtworkList artworks={artworks}/>
+        )}
+        <ButtonWrapper>
+  <Button
+    onClick={() => {
+      setCurrentPage((currentPage) => currentPage - 1);
+    }}
+    disabled={currentPage === 1}
+    icon={faArrowLeft}
+  />
+  <Button
+    onClick={() => {
+      setCurrentPage((currentPage) => currentPage + 1);
+    }}
+    icon={faArrowRight}
+  />
+        </ButtonWrapper>
+        </>
+  }
 
 export default BrowseArtworks
