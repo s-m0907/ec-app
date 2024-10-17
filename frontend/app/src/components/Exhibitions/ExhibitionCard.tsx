@@ -1,7 +1,6 @@
-import { Exhibition } from "../../firebase"
+import { ArtworkId, Exhibition } from "../../firebase"
 import styled from "styled-components"
 import CardImage from "./CardImage"
-import useFetch from "../../hooks/useFetch"
 import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 
@@ -53,38 +52,29 @@ interface ExhibitionCardProps {
 }
 
 const ExhibitionCard: React.FC<ExhibitionCardProps> = ({exhibition}) => {
-    const idString = exhibition.artwork_ids.join(',')
-    const {data, error} = useFetch<any>(`https://api.artic.edu/api/v1/artworks?ids=${idString}0&fields=id,title,image_id`)
-    const [imageIds, setImageIds] = useState<string[]>([])
+    const [artworkIds, setArtworkIds] = useState<ArtworkId[]>([])
     const location = useLocation()
 
     useEffect(() => {
-        if (data && data.data) {
-            const idArray = data.data.map((item: any) => item.image_id)
-            setImageIds(idArray.slice(0,3))
-            } else if (error) {
-                console.error(error)
-            }
-    }, [data])
+        if (exhibition) {
+            setArtworkIds(exhibition.artwork_ids)
+    }}, [])
 
     const exhibitionUrl = `${location.pathname}/${exhibition.exhibition_name}`
 
-    if(imageIds.length !== 0) {
     return <Container>
         <Link to={exhibitionUrl} state={{ exhibition: exhibition }}>
         <ImageGrid>
-        {imageIds.map((imageId, index) => {
-            return <CardImage imageId={imageId} url={data.config.iiif_url} index={index}/>
+        {artworkIds.map((artwork_id, index) => {
+            return <CardImage key={index} artwork_id={artwork_id} index={index}/>
         })}
         </ImageGrid>
         </Link>
         <Footer>
         <Title>{exhibition.exhibition_name}</Title>
-        <p>{data.data.length} artworks</p>
+        <p>{artworkIds.length} artworks</p>
         </Footer>
         </Container>
-    }
-return <></>
 }
 
 export default ExhibitionCard

@@ -76,10 +76,11 @@ const AddArtwork: React.FC<AddArtworkProps> = ({ selectedArtwork, onClose }) => 
         }
 
         try {
-            await addArtwork(user.uid, exhibitionName, selectedArtwork.id)
+            const iiif_url = selectedArtwork.images.iiif_url
+            await addArtwork(user.uid, exhibitionName, selectedArtwork.id, selectedArtwork.api, iiif_url)
+            onClose()
             alert(`${selectedArtwork.title} was added to ${exhibitionName}`)
             resetForm()
-            onClose()
         } catch (error: any){
             setError(error.message)
             console.error('Error: ', error)

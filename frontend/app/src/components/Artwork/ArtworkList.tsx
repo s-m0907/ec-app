@@ -13,8 +13,24 @@ gap: 16px;
 padding: 16px
 `
 
+export interface Artwork {
+  id: string | number
+  title: string
+  artist: string
+  medium: string
+  date: string
+  images: {
+    lqip: string
+    alt_text: string
+    thumbnail: string
+    iiif_url: string
+  }
+  api: string
+}
+
+
 interface ArtworkListProps {
-  artworks: Record<string, any>[]
+  artworks: Artwork[]
 }
 
 const ArtworkList: React.FC<ArtworkListProps> = ({ artworks }) => {

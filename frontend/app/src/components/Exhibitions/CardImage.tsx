@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { ArtworkId } from '../../firebase'
 
 const Img = styled.img`
 width: 100%;
@@ -25,18 +26,16 @@ grid-column: 2 / 2;
 `
 
 interface CardImageProps {
-    imageId: string,
-    url: string,
+    artwork_id: ArtworkId,
     index: number
 }
 
-const CardImage: React.FC<CardImageProps> = ({imageId, url, index}) => {
-    const iiifUrl = `${url}/${imageId}/full/843,/0/default.jpg`
+const CardImage: React.FC<CardImageProps> = ({artwork_id, index}) => {
 
     return <>
-    {index === 0 && <Image1><Img src={iiifUrl}/></Image1>}
-    {index === 1 && <Image2><Img src={iiifUrl}/></Image2>}
-    {index === 2 && <Image3><Img src={iiifUrl}/></Image3>}
+    {index === 0 && <Image1><Img src={artwork_id.iiif}/></Image1>}
+    {index === 1 && <Image2><Img src={artwork_id.iiif}/></Image2>}
+    {index === 2 && <Image3><Img src={artwork_id.iiif}/></Image3>}
         </>
 }
 
