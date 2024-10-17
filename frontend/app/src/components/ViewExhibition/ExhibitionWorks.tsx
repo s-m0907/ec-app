@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import Modal from '../Common/Modal'
-import { useEffect, useState } from 'react'
 import useModal from '../../hooks/useModal'
-import ArtworkDetail from './ArtworkDetail'
+import Modal from '../Common/Modal'
 import ArtworkCard from '../Artwork/ArtworkCard'
-import { ArtworkId } from '../../firebase'
-import { gql, useApolloClient, useQuery } from '@apollo/client'
+import ArtworkInfoCard from './ArtworkInfoCard'
+import { ArtworkDetail, ArtworkId } from '../../types'
+import { useEffect, useState } from 'react'
+import { gql, useApolloClient } from '@apollo/client'
 
 const Grid = styled.div`
 display: flex;
@@ -17,27 +17,6 @@ padding: 16px
 
 interface ExhibitionWorksProps {
   artwork_ids: ArtworkId[]
-}
-
-export interface ArtworkDetail {
-  id: string
-  title: string
-  artist: string
-  medium: string
-  date: string
-  images: {
-    lqip: string
-    alt_text: string
-    thumbnail: string
-    iiif_url: string
-  }
-  description: string
-  place_of_origin: string
-  dimensions: string
-  is_on_view: boolean
-  location: string
-  categories: [string]
-  api: string
 }
 
 const GET_ARTWORK = gql`
@@ -125,7 +104,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
           <Modal
             isOpen={isOpen}
             close={close}
-            content={<ArtworkDetail selectedArtwork={selectedArtwork} />}
+            content={<ArtworkInfoCard selectedArtwork={selectedArtwork} />}
           />
         </>
       )}

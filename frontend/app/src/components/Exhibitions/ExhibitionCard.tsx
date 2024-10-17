@@ -1,8 +1,8 @@
-import { ArtworkId, Exhibition } from "../../firebase"
 import styled from "styled-components"
 import CardImage from "./CardImage"
 import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { ArtworkId, Exhibition } from "../../types"
 
 const Container = styled.div`
 flex: 1 1 calc(25% - 16px);

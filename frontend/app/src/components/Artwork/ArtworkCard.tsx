@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import Button from '../Common/Button'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
-import { ArtworkDetail } from '../ViewExhibition/ExhibitionWorks'
-import { Artwork } from './ArtworkList'
-import { useEffect } from 'react'
+import { Artwork, ArtworkDetail } from '../../types'
 
 const Container = styled.div`
 flex: 1 1 calc(25% - 16px);
@@ -30,7 +28,7 @@ max-width: 100%`
 
 
 interface ArtworkCardProps {
-    artwork: Artwork | ArtworkDetail 
+    artwork: Artwork | ArtworkDetail
     onClick: () => void
     variant: string
   }

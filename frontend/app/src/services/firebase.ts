@@ -1,5 +1,6 @@
 import { collection, doc, getDocs, setDoc, getDoc, arrayUnion } from "firebase/firestore"
-import { db } from "./firebaseConfig"
+import { db } from "../firebaseConfig"
+import { Exhibition } from "../types"
 
 export const addUser = async(username: string, email: string, uid: string) => {
 try{
@@ -11,18 +12,6 @@ try{
 } catch (e) {
   console.error("Error adding document: ", e)
 }
-}
-
-export interface ArtworkId {
-  api: string
-  artwork_id: string
-  iiif: string
-}
-
-export interface Exhibition {
-  id: string
-  exhibition_name: string
-  artwork_ids: ArtworkId[]
 }
 
 export const getExhibitions = async (userId: string) => {

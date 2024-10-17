@@ -4,6 +4,7 @@ import Modal from '../Common/Modal'
 import { useState } from 'react'
 import AddArtwork from './AddArtwork'
 import useModal from '../../hooks/useModal'
+import { Artwork } from '../../types'
 
 const Grid = styled.div`
 display: flex;
@@ -12,22 +13,6 @@ justify-content: flex-start;
 gap: 16px;
 padding: 16px
 `
-
-export interface Artwork {
-  id: string | number
-  title: string
-  artist: string
-  medium: string
-  date: string
-  images: {
-    lqip: string
-    alt_text: string
-    thumbnail: string
-    iiif_url: string
-  }
-  api: string
-}
-
 
 interface ArtworkListProps {
   artworks: Artwork[]
