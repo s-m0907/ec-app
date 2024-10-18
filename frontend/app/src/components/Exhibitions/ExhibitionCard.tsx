@@ -11,6 +11,7 @@ display: flex;
 flex-direction: column;
 justify-content: flex-start;
 border: solid black 2px;
+overflow: hidden;
 
 @media(max-width: 1200px) {
     flex: 1 1 calc(33.33% - 16px);

@@ -1,5 +1,11 @@
 import { useLocation } from 'react-router-dom';
 import ExhibitionWorks from './ExhibitionWorks';
+import styled from 'styled-components'
+
+const Title = styled.h2`
+margin: 20px 0 -10px 30px;
+font-weight: bold;
+`
 
 const ExhibitionPage: React.FC = () => {
     const location = useLocation()
@@ -7,7 +13,7 @@ const ExhibitionPage: React.FC = () => {
     const { exhibition } = location.state || {};
 
     return <>
-    <h2>{exhibition.exhibition_name}</h2>
+    <Title>{exhibition.exhibition_name}</Title>
     <ExhibitionWorks artwork_ids={exhibition.artwork_ids}/>
     </>
 }

@@ -16,11 +16,12 @@ row-gap: 1rem;
 const Container = styled.div`
 display: flex;
 flex-direction: row;
+flex-wrap: wrap;
 border: solid whitesmoke;
 `
 
 const ExhibitionTag = styled.div`
-background-color: purple;
+background-color: #a881af;
 color: white;
 font-weight: 700;
 display: inline-block;
@@ -59,7 +60,7 @@ const AddArtwork: React.FC<AddArtworkProps> = ({ selectedArtwork, onClose }) => 
             }
         }
         fetchExhibitions()
-    },[])
+    },[user])
 
     if(!user) {
         return <Navigate to='sign-in'/>
