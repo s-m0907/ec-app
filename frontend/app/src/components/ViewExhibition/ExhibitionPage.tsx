@@ -1,21 +1,23 @@
-import { useLocation } from 'react-router-dom';
-import ExhibitionWorks from './ExhibitionWorks';
-import styled from 'styled-components'
+import { useLocation } from "react-router-dom";
+import ExhibitionWorks from "./ExhibitionWorks";
+import styled from "styled-components";
 
 const Title = styled.h2`
-margin: 20px 0 -10px 30px;
-font-weight: bold;
-`
+  margin: 20px 0 -10px 30px;
+  font-weight: bold;
+`;
 
 const ExhibitionPage: React.FC = () => {
-    const location = useLocation()
+  const location = useLocation();
 
-    const { exhibition } = location.state || {};
+  const { exhibition } = location.state || {};
 
-    return <>
-    <Title>{exhibition.exhibition_name}</Title>
-    <ExhibitionWorks artwork_ids={exhibition.artwork_ids}/>
+  return (
+    <>
+      <Title>{exhibition.exhibition_name}</Title>
+      <ExhibitionWorks artwork_ids={exhibition.artwork_ids} />
     </>
-}
+  );
+};
 
-export default ExhibitionPage
+export default ExhibitionPage;

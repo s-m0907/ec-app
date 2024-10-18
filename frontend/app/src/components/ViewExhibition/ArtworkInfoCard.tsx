@@ -1,12 +1,13 @@
-import { ArtworkDetail } from "../../types"
+import { ArtworkDetail } from "../../types";
 
 interface ArtworkInfoCardProps {
-    selectedArtwork: ArtworkDetail[]
+  selectedArtwork: ArtworkDetail[];
 }
 
-const ArtworkInfoCard: React.FC<ArtworkInfoCardProps> = ({selectedArtwork}) => {
+const ArtworkInfoCard: React.FC<ArtworkInfoCardProps> = ({
+  selectedArtwork,
+}) => {
+  return <></>;
+};
 
-    return <></>
-}
-
-export default ArtworkInfoCard
+export default ArtworkInfoCard;
