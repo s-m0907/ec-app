@@ -1,5 +1,7 @@
+import { ArtworkDetail } from "../../types"
+
 interface ArtworkInfoCardProps {
-    selectedArtwork: any
+    selectedArtwork: ArtworkDetail[]
 }
 
 const ArtworkInfoCard: React.FC<ArtworkInfoCardProps> = ({selectedArtwork}) => {

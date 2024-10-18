@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, setDoc, getDoc, arrayUnion } from "firebase/firestore"
+import { collection, doc, getDocs, setDoc, getDoc, arrayUnion, updateDoc } from "firebase/firestore"
 import { db } from "../firebaseConfig"
 import { Exhibition } from "../types"
 
@@ -35,7 +35,7 @@ export const getExhibitions = async (userId: string) => {
   }
 }
 
-export const addArtwork = async (userId: string, exhibition_name: string, artwork_id: number,api: string, iiif: string) => {
+export const addArtwork = async (userId: string, exhibition_name: string, artwork_id: number | string, api: string, iiif: string) => {
   try {
       const exhibitionRef = doc(db, 'users', userId, "exhibitions", exhibition_name)
 
@@ -51,5 +51,24 @@ export const addArtwork = async (userId: string, exhibition_name: string, artwor
       console.log("Exhibition updated or created:", exhibition_name)
   } catch (error) {
       console.error("Error updating exhibition:", error)
+  }
+}
+
+export const removeArtwork = async (userId: string, exhibition_name: string, artwork_id_to_remove: number | string) => {
+  try {
+    const exhibitionRef = doc(db, 'users', userId, 'exhibitions', exhibition_name)
+  
+    const querySnapshot = await getDoc(exhibitionRef)
+    const data = querySnapshot.data() as Exhibition
+    const artwork_array = data?.artwork_ids
+
+    const updated_artwork_array = artwork_array.filter((artwork) => artwork.artwork_id !== artwork_id_to_remove);
+
+    await updateDoc(exhibitionRef, {
+      artwork_ids: updated_artwork_array
+    })
+    console.log('Artwork removed from firestore')
+  } catch (error) {
+    console.error("Could not remove artwork:", error)
   }
 }
