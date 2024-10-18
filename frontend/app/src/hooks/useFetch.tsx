@@ -1,30 +1,33 @@
-import { useEffect, useState } from 'react'
-import { axiosInstance, cache } from '../services/api'
+import { useEffect, useState } from "react";
+import { axiosInstance, cache } from "../services/api";
 
 function useFetch<T>(url: string) {
-  const [result, setResult] = useState<{ data: T | null; error: string | null }>({
+  const [result, setResult] = useState<{
+    data: T | null;
+    error: string | null;
+  }>({
     data: null,
     error: null,
-  })
+  });
 
   useEffect(() => {
     if (cache[url]) {
-      setResult({ data: cache[url], error: null })
+      setResult({ data: cache[url], error: null });
     }
 
     const fetchData = async () => {
       try {
-        const { data } = await axiosInstance.get<T>(url)
-        setResult({ data, error: null })
+        const { data } = await axiosInstance.get<T>(url);
+        setResult({ data, error: null });
       } catch (err: any) {
-        setResult({ data: null, error: err.message })
+        setResult({ data: null, error: err.message });
       }
     };
 
-    fetchData()
-  }, [url])
+    fetchData();
+  }, [url]);
 
-  return result
+  return result;
 }
 
-export default useFetch
+export default useFetch;

@@ -1,9 +1,11 @@
-import ExhibitionsList from "./ExhibitionsList"
+import ExhibitionsList from "./ExhibitionsList";
 
 const ExhibitionsPage: React.FC = () => {
+  return (
+    <>
+      <ExhibitionsList />
+    </>
+  );
+};
 
-    return <><ExhibitionsList/></>
-
-}
-
-export default ExhibitionsPage
+export default ExhibitionsPage;
