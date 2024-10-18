@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import useModal from '../../hooks/useModal'
 import Modal from '../Common/Modal'
 import ArtworkCard from '../Artwork/ArtworkCard'
-import ArtworkInfoCard from './ArtworkInfoCard'
 import { ArtworkDetail, ArtworkId } from '../../types'
 import { useEffect, useState } from 'react'
 import { gql, useApolloClient } from '@apollo/client'
+import EditArtwork from './EditArtwork'
 
 const Grid = styled.div`
 display: flex;
@@ -45,11 +45,11 @@ query Artwork($artworkId: String, $api: String) {
 `
 
 const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
-  const client = useApolloClient()
   const [artworks, setArtworks] = useState<ArtworkDetail[]>([]);
   const [selectedArtwork, setSelectedArtwork] = useState({});
-  const { open, isOpen, close } = useModal();
   const [isLoading, setIsLoading] = useState(true)
+  const { open, isOpen, close } = useModal();
+  const client = useApolloClient()
 
   useEffect(() => {
     setIsLoading(true)
@@ -79,7 +79,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
     };
 
     fetchArtworks();
-  }, [artwork_ids])
+  }, [artwork_ids, client])
 
   const handleOpenModal = (artwork: any) => {
     setSelectedArtwork(artwork);
@@ -104,7 +104,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
           <Modal
             isOpen={isOpen}
             close={close}
-            content={<ArtworkInfoCard selectedArtwork={selectedArtwork} />}
+            content={<EditArtwork selectedArtwork={selectedArtwork} onClose={close}/>}
           />
         </>
       )}
