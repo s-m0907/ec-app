@@ -4,9 +4,10 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { ButtonHTMLAttributes } from 'react'
 
 const StyledButton = styled.button<ButtonProps>`
-  padding: 12px;
+  padding: 0.8rem;
   margin: 0 0.4rem;
-  background-color: #333;
+  background-color: ${props => 
+    props.color ? props.color : '#262B2F'};  
   color: white;
   font-size: 16px;
   border: none;
@@ -23,11 +24,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     onClick: () => void
     icon?: IconProp
     radius?: 'pill'
+    color?: string
   }
 
-const Button: React.FC<ButtonProps> = ({ icon, body, onClick, radius }) => {
+const Button: React.FC<ButtonProps> = ({ icon, body, onClick, radius, color }) => {
 
-return <StyledButton onClick={onClick} radius={radius}>
+return <StyledButton onClick={onClick} radius={radius} color={color}>
     {icon && <FontAwesomeIcon icon={icon} />}{body}
 </StyledButton>
 }
