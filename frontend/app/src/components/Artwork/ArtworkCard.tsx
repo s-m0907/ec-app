@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import Button from '../Common/Button'
 import { faHeart, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { Artwork, ArtworkDetail } from '../../types'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
 flex: 1 1 calc(25% - 16px);
@@ -63,7 +64,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick, variant }) 
 
 return (<Container>
         <ImageWrapper>
-         {artwork.images.iiif_url && <Img src={artwork.images.iiif_url || 'Loading'} alt={artwork.images.alt_text || 'Artwork Image'}/>}
+        <Link to={`/artworks/${artwork.id}`} state={{ artwork: artwork }}>{artwork.images.iiif_url && <Img src={artwork.images.iiif_url || 'Loading'} alt={artwork.images.alt_text || 'Artwork Image'}/>}</Link>
         <ActionsBar>
         {variant === 'exhibition' ? <Button icon={faPenToSquare} onClick={onClick}/> : (
             <Button icon={faHeart} color={'#dd7973'} onClick={onClick}/>
