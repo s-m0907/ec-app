@@ -7,6 +7,7 @@ import SignIn from "./components/Auth/SignIn";
 import BrowseArtworks from "./components/Artwork/BrowseArtworks";
 import ExhibitionsPage from "./components/Exhibitions/ExhibitionsPage";
 import ExhibitionPage from "./components/ViewExhibition/ExhibitionPage";
+import ArtworkPage from "./components/ViewExhibition/ArtworkPage";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             path="/:userId/exhibitions/:exhibitionName"
             element={<ExhibitionPage />}
           />
+            <Route path= '/artworks/:artworkId' element={<ArtworkPage/>}/>
         </Routes>
       </Router>
     </AuthProvider>
