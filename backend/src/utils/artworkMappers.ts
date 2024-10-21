@@ -1,7 +1,6 @@
 export const mapArtworks = (data: any, source: string, config?: any, pagination?: any) => {
   switch (source) {
     case 'aic': {
-
       const { id, title, artist_title, medium_display, date_display, thumbnail, image_id, description, short_description, place_of_origin, dimensions, is_on_view, gallery_title, category_titles } = data;
       return {
         id,
@@ -14,7 +13,7 @@ export const mapArtworks = (data: any, source: string, config?: any, pagination?
           alt_text: thumbnail?.alt_text || null,
           iiif_url: `${config.iiif_url}/${image_id}/full/843,/0/default.jpg`,
         },
-        description: description || short_description || null,
+        description: description?.replace(/<\/?[^>]+(>|$)/g, "") || short_description?.replace(/<\/?[^>]+(>|$)/g, "") || null,
         place_of_origin,
         dimensions,
         is_on_view,
@@ -26,7 +25,6 @@ export const mapArtworks = (data: any, source: string, config?: any, pagination?
     }
 
     case 'v&a': {
-      console.log(data)
       const { systemNumber, _primaryTitle, _primaryMaker, objectType, _primaryDate, _images, _currentLocation } = data;
       const locations = {"VA": "V&A South Kensington", "WED": "V&A Wedgwood", "YVA": "Young V&A", "dundee": "V&A Dundee"}
       return {
@@ -69,7 +67,7 @@ export const mapArtwork = (response: any, source: string) => {
           iiif_url: `${config.iiif_url}/${image_id}/full/843,/0/default.jpg`,
           copyright: info.license_links[0]
         },
-        description: description || short_description || null,
+        description: description?.replace(/<\/?[^>]+(>|$)/g, "") || short_description?.replace(/<\/?[^>]+(>|$)/g, "") || null,
         place_of_origin,
         dimensions,
         is_on_view,
@@ -93,7 +91,7 @@ export const mapArtwork = (response: any, source: string) => {
           iiif_url: meta.images?._iiif_image || null,
           copyright: meta.images_meta?.copyright || null
         },
-        description: summaryDescription || briefDescription || null,
+        description: summaryDescription?.replace(/<\/?[^>]+(>|$)/g, "") || briefDescription?.replace(/<\/?[^>]+(>|$)/g, "") || null,
         place_of_origin: placesOfOrigin?.[0]?.place?.text || null,
         dimensions: dimensions?.map(dimension => `${dimension.dimension}: ${dimension.value}${dimension.unit}`).join(', ') || null,
         is_on_view: !!galleryLocations?.length || null,

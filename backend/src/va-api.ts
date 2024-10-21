@@ -26,7 +26,6 @@ class VaAPI extends RESTDataSource {
           page: `${page}`,
         },
       })
-      console.log(data.records)
       return data
   }
 
