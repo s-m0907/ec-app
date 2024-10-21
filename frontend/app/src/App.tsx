@@ -23,7 +23,7 @@ const App: React.FC = () => {
             path="/:userId/exhibitions/:exhibitionName"
             element={<ExhibitionPage />}
           />
-            <Route path= '/artworks/:artworkId' element={<ArtworkPage/>}/>
+          <Route path="/artworks/:artworkId" element={<ArtworkPage />} />
         </Routes>
       </Router>
     </AuthProvider>
