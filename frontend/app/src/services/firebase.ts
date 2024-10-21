@@ -30,8 +30,6 @@ export const getExhibitions = async (userId: string) => {
     const exhibitions: Exhibition[] = [];
 
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-
       const data = doc.data();
       exhibitions.push({
         id: doc.id,

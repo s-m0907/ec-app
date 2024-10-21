@@ -11,21 +11,6 @@ export interface Exhibition {
 }
 
 export interface Artwork {
-  id: string | number;
-  title: string;
-  artist: string;
-  medium: string;
-  date: string;
-  images: {
-    lqip: string;
-    alt_text: string;
-    thumbnail: string;
-    iiif_url: string;
-  };
-  api: string;
-}
-
-export interface ArtworkDetail {
   id: string;
   title: string;
   artist: string;
@@ -36,12 +21,14 @@ export interface ArtworkDetail {
     alt_text: string;
     thumbnail: string;
     iiif_url: string;
+    copyright: string;
   };
   description: string;
   place_of_origin: string;
   dimensions: string;
   is_on_view: boolean;
   location: string;
+  gallery: string;
   categories: [string];
   api: string;
 }

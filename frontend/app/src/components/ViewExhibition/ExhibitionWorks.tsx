@@ -2,7 +2,7 @@ import styled from "styled-components";
 import useModal from "../../hooks/useModal";
 import Modal from "../Common/Modal";
 import ArtworkCard from "../Artwork/ArtworkCard";
-import { ArtworkDetail, ArtworkId } from "../../types";
+import { Artwork, ArtworkId } from "../../types";
 import { useEffect, useState } from "react";
 import { gql, useApolloClient } from "@apollo/client";
 import EditArtwork from "./EditArtwork";
@@ -32,11 +32,13 @@ const GET_ARTWORK = gql`
         alt_text
         thumbnail
         iiif_url
+        copyright
       }
       description
       place_of_origin
       dimensions
       is_on_view
+      gallery
       location
       categories
       api
@@ -45,7 +47,7 @@ const GET_ARTWORK = gql`
 `;
 
 const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
-  const [artworks, setArtworks] = useState<ArtworkDetail[]>([]);
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [selectedArtwork, setSelectedArtwork] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { open, isOpen, close } = useModal();
@@ -84,7 +86,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
     fetchArtworks();
   }, [artwork_ids, client]);
 
-  const handleOpenModal = (artwork: any) => {
+  const handleOpenModal = (artwork: Artwork) => {
     setSelectedArtwork(artwork);
     open();
   };
@@ -95,7 +97,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
   return (
     <>
       <Grid>
-        {artworks.map((artwork: any) => (
+        {artworks.map((artwork: Artwork) => (
           <ArtworkCard
             key={artwork.id}
             artwork={artwork}
