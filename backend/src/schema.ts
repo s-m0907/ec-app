@@ -1,5 +1,11 @@
 const typeDefs = `#graphql
 
+type ArtworksResponse {
+  artworks: [Artwork]
+  aicTotalCount: Int
+  vaTotalCount: Int
+}
+
 type Images {
   lqip: String
   alt_text: String
@@ -26,7 +32,7 @@ type Images {
   }
 
   type Query {
-    artworks(searchTerm: String, limit: Int, page: Int): [Artwork]
+    artworks(searchTerm: String, limit: Int, page: Int): ArtworksResponse
     artwork(id: String, api: String): Artwork
   }
 `
