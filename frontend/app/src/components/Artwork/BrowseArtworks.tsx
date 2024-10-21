@@ -12,15 +12,10 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const BrowseArtworks: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] =
-    useState<string>(searchTerm);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const GET_ARTWORKS = gql`
-    query Artworks($searchTerm: String!, $page: Int!) {
-      artworks(searchTerm: $searchTerm, page: $page) {
+const GET_ARTWORKS = gql`
+  query Artworks($searchTerm: String!, $page: Int!) {
+    artworks(searchTerm: $searchTerm, page: $page) {
+      artworks {
         id
         title
         artist
@@ -31,15 +26,40 @@ const BrowseArtworks: React.FC = () => {
           alt_text
           thumbnail
           iiif_url
+          copyright
         }
+        description
+        place_of_origin
+        dimensions
+        is_on_view
+        gallery
+        location
+        categories
         api
       }
+      aicTotalCount
+      vaTotalCount
     }
-  `;
+  }
+`;
+
+const BrowseArtworks: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] =
+    useState<string>(searchTerm);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const limit = 20;
 
   const { loading, error, data } = useQuery(GET_ARTWORKS, {
     variables: { searchTerm: debouncedSearchTerm, page: currentPage },
   });
+
+  const artworks: Artwork[] = data?.artworks?.artworks ?? [];
+  const aicTotalCount: number = data?.artworks?.aicTotalCount ?? 0;
+  const vaTotalCount: number = data?.artworks?.vaTotalCount ?? 0;
+
+  const aicTotalPages = Math.ceil(aicTotalCount / limit);
+  const vaTotalPages = Math.ceil(vaTotalCount / limit);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -51,11 +71,21 @@ const BrowseArtworks: React.FC = () => {
     };
   }, [searchTerm]);
 
-  const artworks: Artwork[] = data?.artworks ?? [];
-
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);
     setCurrentPage(1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < Math.max(aicTotalPages, vaTotalPages)) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
   };
 
   return (
@@ -71,18 +101,11 @@ const BrowseArtworks: React.FC = () => {
       )}
       <ButtonWrapper>
         <Button
-          onClick={() => {
-            setCurrentPage((currentPage) => currentPage - 1);
-          }}
+          onClick={handlePreviousPage}
           disabled={currentPage === 1}
           icon={faArrowLeft}
         />
-        <Button
-          onClick={() => {
-            setCurrentPage((currentPage) => currentPage + 1);
-          }}
-          icon={faArrowRight}
-        />
+        <Button onClick={handleNextPage} icon={faArrowRight} />
       </ButtonWrapper>
     </>
   );
