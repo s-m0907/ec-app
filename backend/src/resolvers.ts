@@ -1,4 +1,4 @@
-import { mapArtwork, mapArtworkDetail } from './utils/artworkMappers.js'
+import { mapArtwork, mapArtworks } from './utils/artworkMappers.js'
 
 const resolvers = {
   Query: {
@@ -12,12 +12,11 @@ const resolvers = {
             ? dataSources.vaApi.searchArtworks(searchTerm, limit, page) 
             : dataSources.vaApi.getArtworks(limit, page),
         ]);
-  
-        const { data: aicData, config: aicConfig } = aicResponse
-        const { records: vaData } = vaResponse
+        const { data: aicData, config: aicConfig, pagination: aicPagination } = aicResponse
+        const { records: vaData, info: vaInfo } = vaResponse
 
-        const aicArtworks = aicData.map(item => mapArtwork(item, 'aic', aicConfig))
-        const vaArtworks = vaData.map(item => mapArtwork(item, 'v&a'))
+        const aicArtworks = aicData.map(item => mapArtworks(item, 'aic', aicConfig, aicPagination))
+        const vaArtworks = vaData.map(item => mapArtworks(item, 'v&a', vaInfo))
         
         return [...aicArtworks, ...vaArtworks]
       } catch (error) {
@@ -30,10 +29,10 @@ const resolvers = {
       try {
         if(api === 'aic') {
           const artworkDetail = await dataSources.aicApi.getArtwork(id)
-          return mapArtworkDetail(artworkDetail, api)
+          return mapArtwork(artworkDetail, api)
         } else if (api === 'v&a') {
           const artworkDetail = await dataSources.vaApi.getArtwork(id)
-          return mapArtworkDetail(artworkDetail, api)
+          return mapArtwork(artworkDetail, api)
         }
       } catch (error) {
         console.error("Error fetching artwork:", error)

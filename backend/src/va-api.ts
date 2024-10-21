@@ -21,12 +21,12 @@ class VaAPI extends RESTDataSource {
         params: {
           images_exist: '1',
           data_restrict: 'descriptive_only',
-          on_display_at: 'all',
-          q_object_name: `${searchTerm}`,
+          q_object_name: searchTerm,
           page_size: `${limit}`,
           page: `${page}`,
         },
       })
+      console.log(data.records)
       return data
   }
 
