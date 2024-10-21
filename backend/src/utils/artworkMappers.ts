@@ -88,7 +88,7 @@ export const mapArtwork = (response: any, source: string) => {
         date: productionDates?.[0]?.date?.text || null,
         images: {
           thumbnail: meta.images?._primary_thumbnail || null,
-          iiif_url: meta.images?._iiif_image || null,
+          iiif_url: `${meta.images?._iiif_image}full/full/0/default.jpg` || null,
           copyright: meta.images_meta?.copyright || null
         },
         description: summaryDescription?.replace(/<\/?[^>]+(>|$)/g, "") || briefDescription?.replace(/<\/?[^>]+(>|$)/g, "") || null,
