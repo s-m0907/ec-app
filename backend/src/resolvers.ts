@@ -18,7 +18,11 @@ const resolvers = {
         const aicArtworks = aicData.map(item => mapArtworks(item, 'aic', aicConfig, aicPagination))
         const vaArtworks = vaData.map(item => mapArtworks(item, 'v&a', vaInfo))
         
-        return [...aicArtworks, ...vaArtworks]
+        return {
+          artworks: [...aicArtworks, ...vaArtworks],
+          aicTotalCount: aicPagination.total,
+          vaTotalCount: vaInfo.record_count,
+        }
       } catch (error) {
         console.error("Error fetching artworks:", error);
         throw new Error("Failed to fetch artworks");
