@@ -71,6 +71,7 @@ export const mapArtwork = (response: any, source: string) => {
         place_of_origin,
         dimensions,
         is_on_view,
+        gallery: is_on_view ? 'Art Institute Chicago': null,
         location: gallery_title || null,
         categories: category_titles,
         api: 'aic',
