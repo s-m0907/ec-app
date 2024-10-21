@@ -5,6 +5,20 @@ import { useState } from "react";
 import AddArtwork from "./AddArtwork";
 import useModal from "../../hooks/useModal";
 import { Artwork } from "../../types";
+import Loading from "../Common/Loading";
+import { faFaceSadCry } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 40px;
+  padding: 1rem;
+  font-size: 20px;
+  text-align: center;
+  color: #4681f4;
+`;
 
 const Grid = styled.div`
   display: flex;
@@ -16,30 +30,38 @@ const Grid = styled.div`
 
 interface ArtworkListProps {
   artworks: Artwork[];
+  loading: boolean;
 }
 
-const ArtworkList: React.FC<ArtworkListProps> = ({ artworks }) => {
+const ArtworkList: React.FC<ArtworkListProps> = ({ artworks, loading }) => {
   const [selectedArtwork, setSelectedArtwork] = useState({});
   const { open, isOpen, close } = useModal();
 
-  const handleOpenModal = (artwork: any) => {
+  const handleOpenModal = (artwork: Artwork) => {
     setSelectedArtwork(artwork);
     open();
   };
 
-  return (
+  return loading ? (
+    <Wrapper>
+      <Loading />
+    </Wrapper>
+  ) : artworks.length === 0 ? (
+    <Wrapper>
+      <FontAwesomeIcon icon={faFaceSadCry} size="xl" />
+      <p> We couldn’t find any matches. Try a different search term.</p>
+    </Wrapper>
+  ) : (
     <>
       <Grid>
-        {artworks.map((artwork: any) => {
-          return (
-            <ArtworkCard
-              key={artwork.id}
-              artwork={artwork}
-              onClick={() => handleOpenModal(artwork)}
-              variant={"browse"}
-            />
-          );
-        })}
+        {artworks.map((artwork: Artwork) => (
+          <ArtworkCard
+            key={artwork.id}
+            artwork={artwork}
+            onClick={() => handleOpenModal(artwork)}
+            variant={"browse"}
+          />
+        ))}
       </Grid>
       <Modal
         isOpen={isOpen}
