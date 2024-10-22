@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   padding: 1rem;
   font-size: 20px;
   text-align: center;
-  color: #4681f4;
+  color: #2b6ef3;
 `;
 
 const Grid = styled.div`

@@ -27,6 +27,11 @@ const Input = styled.input`
   }
 `;
 
+const Label = styled.label`
+  font-size: 22px;
+  font-weight: bold;
+`;
+
 interface SearchBarProps {
   searchTerm: string;
   onSearchChange: (term: string) => void;
@@ -38,9 +43,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <SearchWrapper>
-      <h2>Search artworks </h2>
+      <Label htmlFor="search">Search artworks </Label>
       <Input
         type="text"
+        id="search"
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
       />
