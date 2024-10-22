@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Artwork } from "../../types";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface CarouselProps {
   artworks: Artwork[];
@@ -154,22 +157,30 @@ const Carousel: React.FC<CarouselProps> = ({
               <h3>{currentArtwork.title}</h3>
               <h4>{currentArtwork.date}</h4>
             </ArtworkDetails>
-            {currentArtwork.is_on_view && (
-              <ArtworkLocation>
-                <p
-                  style={{
-                    color: "#ffbd03",
-                    margin: 0,
-                    fontSize: "22px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  On view
-                </p>
-                <GalleryText>{currentArtwork.gallery}</GalleryText>
-                <GalleryText>{currentArtwork.location}</GalleryText>
-              </ArtworkLocation>
-            )}
+            <ArtworkLocation>
+              {currentArtwork.is_on_view && (
+                <>
+                  <p
+                    style={{
+                      color: "#ffbd03",
+                      margin: 0,
+                      fontSize: "22px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    On view
+                  </p>
+                  <GalleryText>{currentArtwork.gallery}</GalleryText>
+                  <GalleryText>{currentArtwork.location}</GalleryText>
+                </>
+              )}
+              <Link
+                to={`/artworks/${currentArtwork.id}`}
+                state={{ artwork: currentArtwork }}
+              >
+                <FontAwesomeIcon icon={faInfoCircle} size="xl" />
+              </Link>
+            </ArtworkLocation>
           </ArtworkInfo>
           <dl>
             {currentArtwork.medium && (

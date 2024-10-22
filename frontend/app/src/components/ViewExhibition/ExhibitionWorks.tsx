@@ -130,14 +130,14 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
     <>
       <Grid>
         {artworks.map((artwork: Artwork, index: number) => (
-          <div key={artwork.id} onClick={() => openCarouselModal(index)}>
             <ArtworkCard
+              index={index}
+              openCarouselModal = {openCarouselModal}
               key={artwork.id}
               artwork={artwork}
               onClick={() => handleOpenModal(artwork)}
               variant={"exhibition"}
             />
-          </div>
         ))}
       </Grid>
       <Modal
