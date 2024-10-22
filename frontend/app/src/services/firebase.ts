@@ -6,6 +6,7 @@ import {
   getDoc,
   arrayUnion,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { Exhibition } from "../types";
@@ -108,3 +109,13 @@ export const removeArtwork = async (
     console.error("Could not remove artwork:", error);
   }
 };
+
+export const deleteExhibition = async (userId: string, exhibitionName: string) => {
+try {
+  await deleteDoc(doc(db, "users", userId, "exhibitions", exhibitionName));
+  console.log("Exhibition deleted")
+} catch (error) {
+  console.error("Could not delete Exhibition")
+}
+}
+
