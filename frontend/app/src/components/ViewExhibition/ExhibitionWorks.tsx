@@ -6,6 +6,8 @@ import { Artwork, ArtworkId } from "../../types";
 import { useEffect, useState } from "react";
 import { gql, useApolloClient } from "@apollo/client";
 import EditArtwork from "./EditArtwork";
+import Carousel from "../Common/Carousel";
+import Loading from "../Common/Loading";
 
 const Grid = styled.div`
   display: flex;
@@ -13,6 +15,19 @@ const Grid = styled.div`
   justify-content: flex-start;
   gap: 16px;
   padding: 16px;
+`;
+
+const CarouselModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface ExhibitionWorksProps {
@@ -50,6 +65,8 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [selectedArtwork, setSelectedArtwork] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isCarouselOpen, setIsCarouselOpen] = useState<boolean>(false);
   const { open, isOpen, close } = useModal();
   const client = useApolloClient();
 
@@ -91,19 +108,30 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
     open();
   };
 
+  const openCarouselModal = (index: number): void => {
+    setCurrentIndex(index);
+    setIsCarouselOpen(true);
+  };
+
+  const closeCarousel = (): void => {
+    setIsCarouselOpen(false);
+  };
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <>
       <Grid>
-        {artworks.map((artwork: Artwork) => (
-          <ArtworkCard
-            key={artwork.id}
-            artwork={artwork}
-            onClick={() => handleOpenModal(artwork)}
-            variant={"exhibition"}
-          />
+        {artworks.map((artwork: Artwork, index: number) => (
+          <div key={artwork.id} onClick={() => openCarouselModal(index)}>
+            <ArtworkCard
+              key={artwork.id}
+              artwork={artwork}
+              onClick={() => handleOpenModal(artwork)}
+              variant={"exhibition"}
+            />
+          </div>
         ))}
       </Grid>
       <Modal
@@ -113,6 +141,15 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
           <EditArtwork selectedArtwork={selectedArtwork} onClose={close} />
         }
       />
+      {isCarouselOpen && (
+        <CarouselModal>
+          <Carousel
+            artworks={artworks}
+            currentIndex={currentIndex}
+            onClose={closeCarousel}
+          />
+        </CarouselModal>
+      )}
     </>
   );
 };
