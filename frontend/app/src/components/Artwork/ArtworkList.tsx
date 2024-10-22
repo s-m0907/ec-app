@@ -8,6 +8,7 @@ import { Artwork } from "../../types";
 import Loading from "../Common/Loading";
 import { faFaceSadCry } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Toast from "../Common/Toast";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,10 +37,15 @@ interface ArtworkListProps {
 const ArtworkList: React.FC<ArtworkListProps> = ({ artworks, loading }) => {
   const [selectedArtwork, setSelectedArtwork] = useState({});
   const { open, isOpen, close } = useModal();
+  const [toastMessage, setToastMessage] = useState<string>("");
 
   const handleOpenModal = (artwork: Artwork) => {
     setSelectedArtwork(artwork);
     open();
+  };
+
+  const handleToastClose = () => {
+    setToastMessage("");
   };
 
   return loading ? (
@@ -67,9 +73,20 @@ const ArtworkList: React.FC<ArtworkListProps> = ({ artworks, loading }) => {
         isOpen={isOpen}
         close={close}
         content={
-          <AddArtwork selectedArtwork={selectedArtwork} onClose={close} />
+          <AddArtwork
+            selectedArtwork={selectedArtwork}
+            onClose={close}
+            setToastMessage={setToastMessage}
+          />
         }
       />
+      {toastMessage && (
+        <Toast
+          color={"#28a745"}
+          message={toastMessage}
+          onClose={handleToastClose}
+        />
+      )}
     </>
   );
 };

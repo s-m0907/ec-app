@@ -8,6 +8,7 @@ import Button from "../Common/Button";
 import Modal from "../Common/Modal";
 import EditExhibition from "./EditExhibition";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import Toast from "../Common/Toast";
 
 const Container = styled.div`
   flex: 1 1 calc(25% - 16px);
@@ -77,6 +78,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
   const [artworkIds, setArtworkIds] = useState<ArtworkId[]>([]);
   const [selectedExhibition, setSelectedExhibition] =
     useState<Exhibition>(exhibition);
+  const [toastMessage, setToastMessage] = useState<string>("");
   const { open, isOpen, close } = useModal();
   const location = useLocation();
 
@@ -91,6 +93,10 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
   const handleOpenModal = (exhibition: Exhibition) => {
     setSelectedExhibition(exhibition);
     open();
+  };
+
+  const handleToastClose = () => {
+    setToastMessage("");
   };
 
   return (
@@ -129,9 +135,17 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
           <EditExhibition
             selectedExhibition={selectedExhibition}
             onClose={close}
+            setToastMessage={setToastMessage}
           />
         }
       />
+      {toastMessage && (
+        <Toast
+          color={"#dc3545"}
+          message={toastMessage}
+          onClose={handleToastClose}
+        />
+      )}
     </>
   );
 };
