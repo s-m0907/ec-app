@@ -35,6 +35,10 @@ const Overlay = styled.div`
   padding: 1rem;
   opacity: 0;
   transition: opacity 0.3s ease;
+
+  @media (hover: none) {
+    opacity: 1;
+  }
 `;
 
 const Slide = styled.div`
@@ -74,6 +78,11 @@ const ControlButton = styled.button`
   font-size: 18px;
   pointer-events: all;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 8px;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -85,6 +94,12 @@ const CloseButton = styled.button`
   font-size: 30px;
   color: white;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    font-size: 24px;
+    top: 10px;
+    right: 10px;
+  }
 `;
 
 const ArtworkInfo = styled.div`
@@ -126,13 +141,13 @@ const Carousel: React.FC<CarouselProps> = ({
 
   const goToNextSlide = (): void => {
     setIndex((prevIndex) =>
-      prevIndex === artworks.length - 1 ? 0 : prevIndex + 1,
+      prevIndex === artworks.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const goToPreviousSlide = (): void => {
     setIndex((prevIndex) =>
-      prevIndex === 0 ? artworks.length - 1 : prevIndex - 1,
+      prevIndex === 0 ? artworks.length - 1 : prevIndex - 1
     );
   };
 
@@ -187,12 +202,6 @@ const Carousel: React.FC<CarouselProps> = ({
               <>
                 <Dt>Medium</Dt>
                 <Dd>{currentArtwork.medium}</Dd>
-              </>
-            )}
-            {currentArtwork.description && (
-              <>
-                <Dt>Description</Dt>
-                <Dd>{currentArtwork.description}</Dd>
               </>
             )}
             {currentArtwork.images.copyright !==

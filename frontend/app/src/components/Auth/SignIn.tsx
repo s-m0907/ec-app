@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding: 60px;
 `;
 
 const Container = styled.div`
@@ -19,7 +20,8 @@ const Container = styled.div`
   border: solid #333 1px;
   border-radius: 20px;
   padding: 20px;
-  width: 30%;
+  width: 100%;
+  max-width: 400px;
   margin: 10px;
 `;
 
@@ -27,6 +29,7 @@ const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  width: 100%;
 `;
 
 const Label = styled.label`
@@ -41,6 +44,8 @@ const Input = styled.input`
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 
   :focus {
     border-color: #007bff;
@@ -57,6 +62,7 @@ const Submit = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
 `;
 
 const Error = styled.p`
@@ -66,6 +72,8 @@ const Error = styled.p`
 const SignUpToggle = styled.p`
   cursor: pointer;
   color: blue;
+  text-align: center;
+  margin-top: 10px;
 `;
 
 const SignIn: React.FC = () => {
