@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import Button from "../Common/Button";
-import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import Placeholder from "../Common/Placeholder";
 import { Artwork } from "../../types";
+import { useState } from "react";
+import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   flex: 1 1 calc(25% - 16px);
@@ -71,24 +73,29 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   index,
   openCarouselModal,
 }) => {
+  const [imgSrc, setImgSrc] = useState<string | null>(artwork.images.iiif_url);
+
   return (
     <Container>
       <ImageWrapper>
-        {artwork.images.iiif_url && (
-          <Img
-            src={artwork.images.iiif_url || "Loading"}
-            alt={artwork.images.alt_text || "Artwork Image"}
-            onClick={() => {
-              if (
-                variant === "exhibition" &&
-                openCarouselModal &&
-                index !== undefined
-              ) {
-                openCarouselModal(index);
-              }
-            }}
-          />
-        )}
+        {imgSrc ? (
+        <Img
+          src={imgSrc}
+          alt={artwork.images.alt_text || artwork.title}
+          onError={() => setImgSrc(null)}
+          onClick={() => {
+            if (
+              variant === "exhibition" &&
+              openCarouselModal &&
+              index !== undefined
+            ) {
+              openCarouselModal(index);
+            }
+          }}
+        />
+      ) : (
+        <Placeholder />
+      )}
         <ActionsBar>
           {variant === "exhibition" ? (
             <Button icon={faPenToSquare} onClick={onClick} />
