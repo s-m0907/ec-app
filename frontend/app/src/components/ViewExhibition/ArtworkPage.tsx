@@ -46,7 +46,7 @@ const Location = styled.h6`
 const Dl = styled.dl``;
 
 const Dt = styled.dt`
-  color: gray;
+  color: #707070;
   margin: 0 0 0.1rem 0;
 `;
 

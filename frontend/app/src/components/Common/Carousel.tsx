@@ -192,8 +192,9 @@ const Carousel: React.FC<CarouselProps> = ({
               <Link
                 to={`/artworks/${currentArtwork.id}`}
                 state={{ artwork: currentArtwork }}
+                style={{ textDecoration: "none" }}
               >
-                <FontAwesomeIcon icon={faInfoCircle} size="xl" />
+                Details <FontAwesomeIcon icon={faInfoCircle} size="xl" />
               </Link>
             </ArtworkLocation>
           </ArtworkInfo>

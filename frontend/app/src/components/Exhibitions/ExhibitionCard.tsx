@@ -42,8 +42,8 @@ const ImageGrid = styled.div`
   height: 500px;
 `;
 
-const Title = styled.h3`
-  font-weight: 500;
+const Title = styled.h4`
+  font-weight: bold;
 `;
 
 const Footer = styled.div`
