@@ -13,16 +13,22 @@ const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 20px;
 `;
 
 const ModalContent = styled.div`
   position: relative;
   background: white;
   border-radius: 8px;
-  padding: 20px;
-  max-width: 500px;
-  width: 100%;
+  padding: 20px 30px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  @media (min-width: 600px) {
+    max-width: 500px;
+  }
 `;
 
 const ModalClose = styled.button`
@@ -38,6 +44,10 @@ const ModalClose = styled.button`
 
   &:hover {
     color: #0056b3;
+  }
+
+  @media (max-width: 400px) {
+    padding: 8px;
   }
 `;
 

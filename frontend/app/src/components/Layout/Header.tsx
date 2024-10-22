@@ -1,41 +1,45 @@
 import styled from "styled-components";
-import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/Auth";
 import Nav from "./Nav";
-import Button from "../Common/Button";
 
 const StyledHeader = styled.header`
   background-color: whitesmoke;
   margin: -10px -10px 10px -10px;
-  padding: 1rem;
+  padding: 1.5rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 20px;
   font-weight: 500;
+  margin: 0;
+
+  @media (max-width: 786px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
 `;
 
 const Header: React.FC = () => {
-  const navigate = useNavigate();
   const { user } = useAuth();
-
-  const handleLogout = async () => {
-    const auth = getAuth();
-    await signOut(auth);
-    navigate("/sign-in");
-  };
 
   if (user) {
     return (
       <StyledHeader>
         <Title>Exhibition Curator</Title>
         <Nav userId={user.uid} />
-        <Button onClick={handleLogout} body={"Sign out"} />
       </StyledHeader>
     );
   } else {

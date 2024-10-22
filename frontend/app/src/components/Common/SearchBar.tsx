@@ -5,6 +5,10 @@ const SearchWrapper = styled.div`
   padding: 2rem;
   margin: 0;
   color: whitesmoke;
+
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
 `;
 
 const Input = styled.input`
@@ -14,6 +18,13 @@ const Input = styled.input`
   border-radius: 10px;
   outline: none;
   font-size: 18px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 0.5rem;
+  }
 `;
 
 interface SearchBarProps {
