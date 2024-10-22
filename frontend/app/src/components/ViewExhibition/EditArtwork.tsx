@@ -12,11 +12,13 @@ const Action = styled.p`
 interface EditArtworkProps {
   selectedArtwork: any;
   onClose: () => void;
+  setToastMessage: any;
 }
 
 const EditArtwork: React.FC<EditArtworkProps> = ({
   selectedArtwork,
   onClose,
+  setToastMessage,
 }) => {
   const { userId, exhibitionName } = useParams();
 
@@ -25,12 +27,19 @@ const EditArtwork: React.FC<EditArtworkProps> = ({
       console.error("Missing user id or exhibition name from URL parameters.");
       return;
     }
-    try {
-      await removeArtwork(userId, exhibitionName, artwork_id);
-      onClose();
-      alert(`${selectedArtwork.title} was removed from ${exhibitionName}`);
-    } catch (error) {
-      console.error("Could not remove artwork: ", error);
+    const userConfirmed = confirm(
+      `Are you sure you want to remove this from ${exhibitionName}?`
+    );
+    if (userConfirmed) {
+      try {
+        await removeArtwork(userId, exhibitionName, artwork_id);
+        onClose();
+        setToastMessage(
+          `${selectedArtwork.title} removed from ${exhibitionName}`
+        );
+      } catch (error) {
+        console.error("Could not remove artwork: ", error);
+      }
     }
   };
 

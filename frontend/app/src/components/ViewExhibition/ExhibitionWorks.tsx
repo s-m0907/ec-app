@@ -8,6 +8,7 @@ import { gql, useApolloClient } from "@apollo/client";
 import EditArtwork from "./EditArtwork";
 import Carousel from "../Common/Carousel";
 import Loading from "../Common/Loading";
+import Toast from "../Common/Toast";
 
 const Grid = styled.div`
   display: flex;
@@ -67,6 +68,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isCarouselOpen, setIsCarouselOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>("");
   const { open, isOpen, close } = useModal();
   const client = useApolloClient();
 
@@ -117,6 +119,10 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
     setIsCarouselOpen(false);
   };
 
+  const handleToastClose = () => {
+    setToastMessage("");
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -138,7 +144,11 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
         isOpen={isOpen}
         close={close}
         content={
-          <EditArtwork selectedArtwork={selectedArtwork} onClose={close} />
+          <EditArtwork
+            selectedArtwork={selectedArtwork}
+            onClose={close}
+            setToastMessage={setToastMessage}
+          />
         }
       />
       {isCarouselOpen && (
@@ -149,6 +159,13 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({ artwork_ids }) => {
             onClose={closeCarousel}
           />
         </CarouselModal>
+      )}
+      {toastMessage && (
+        <Toast
+          color={"#dc3545"}
+          message={toastMessage}
+          onClose={handleToastClose}
+        />
       )}
     </>
   );

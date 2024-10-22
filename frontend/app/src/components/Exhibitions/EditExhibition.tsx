@@ -13,11 +13,13 @@ const Action = styled.p`
 interface EditExhibitionProps {
   selectedExhibition: Exhibition;
   onClose: () => void;
+  setToastMessage: any;
 }
 
 const EditExhibition: React.FC<EditExhibitionProps> = ({
   selectedExhibition,
   onClose,
+  setToastMessage,
 }) => {
   const { userId } = useParams();
 
@@ -26,23 +28,30 @@ const EditExhibition: React.FC<EditExhibitionProps> = ({
       console.error("Missing user id from URL parameters.");
       return;
     }
-    try {
-      await deleteExhibition(userId, exhibitionName);
-      onClose();
-      alert(`${selectedExhibition.exhibition_name} was deleted`);
-    } catch (error) {
-      console.error("Could not delete Exhibition: ", error);
+    const userConfirmed = confirm(
+      "Are you sure you want to delete this exhibition?"
+    );
+    if (userConfirmed) {
+      try {
+        await deleteExhibition(userId, exhibitionName);
+        onClose();
+        setToastMessage(
+          `'${selectedExhibition.exhibition_name}' exhibition deleted`
+        );
+      } catch (error) {
+        console.error("Could not delete Exhibition: ", error);
+      }
     }
   };
 
   return (
-      <Action
-        onClick={() => {
-          handleRemove(selectedExhibition.exhibition_name);
-        }}
-      >
-        <FontAwesomeIcon icon={faTrash} /> Delete Exhibition
-      </Action>
+    <Action
+      onClick={() => {
+        handleRemove(selectedExhibition.exhibition_name);
+      }}
+    >
+      <FontAwesomeIcon icon={faTrash} /> Delete Exhibition
+    </Action>
   );
 };
 

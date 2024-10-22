@@ -5,7 +5,7 @@ import Button from "../Common/Button";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/Auth";
 import { Navigate } from "react-router-dom";
-import { Artwork, Exhibition } from "../../types";
+import { Exhibition } from "../../types";
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,14 +39,16 @@ const Input = styled.input`
 interface AddArtworkProps {
   selectedArtwork: any;
   onClose: () => void;
+  setToastMessage: any;
 }
 
 const AddArtwork: React.FC<AddArtworkProps> = ({
   selectedArtwork,
   onClose,
+  setToastMessage,
 }) => {
   const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
-  const [exhibitionName, setExhibitionName] = useState("");
+  const [exhibitionName, setExhibitionName] = useState<string>("");
   const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false);
   const [error, setError] = useState("");
   const { user } = useAuth();
@@ -87,10 +89,10 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
         exhibitionName,
         selectedArtwork.id,
         selectedArtwork.api,
-        iiif_url,
+        iiif_url
       );
       onClose();
-      alert(`${selectedArtwork.title} was added to ${exhibitionName}`);
+      setToastMessage(`Artwork added to exhibition ${exhibitionName}`);
       resetForm();
     } catch (error: any) {
       setError(error.message);
