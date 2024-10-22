@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Button from "../Common/Button";
 import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { Artwork } from "../../types";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   flex: 1 1 calc(25% - 16px);
@@ -51,30 +50,45 @@ const ActionsBar = styled.div`
 
 const Img = styled.img`
   max-width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 interface ArtworkCardProps {
   artwork: Artwork;
   onClick: () => void;
   variant: string;
+  index?: number;
+  openCarouselModal?: (index: number) => void;
 }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({
   artwork,
   onClick,
   variant,
+  index,
+  openCarouselModal,
 }) => {
   return (
     <Container>
       <ImageWrapper>
-        <Link to={`/artworks/${artwork.id}`} state={{ artwork: artwork }}>
-          {artwork.images.iiif_url && (
-            <Img
-              src={artwork.images.iiif_url || "Loading"}
-              alt={artwork.images.alt_text || "Artwork Image"}
-            />
-          )}
-        </Link>
+        {artwork.images.iiif_url && (
+          <Img
+            src={artwork.images.iiif_url || "Loading"}
+            alt={artwork.images.alt_text || "Artwork Image"}
+            onClick={() => {
+              if (
+                variant === "exhibition" &&
+                openCarouselModal &&
+                index !== undefined
+              ) {
+                openCarouselModal(index);
+              }
+            }}
+          />
+        )}
         <ActionsBar>
           {variant === "exhibition" ? (
             <Button icon={faPenToSquare} onClick={onClick} />
