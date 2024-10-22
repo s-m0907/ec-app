@@ -1,11 +1,17 @@
-import styled from "styled-components";
-import CardImage from "./CardImage";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArtworkId, Exhibition } from "../../types";
+import useModal from "../../hooks/useModal";
+import styled from "styled-components";
+import CardImage from "./CardImage";
+import Button from "../Common/Button";
+import Modal from "../Common/Modal";
+import EditExhibition from "./EditExhibition";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   flex: 1 1 calc(25% - 16px);
+  position: relative;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -49,12 +55,29 @@ const Footer = styled.div`
   margin: 20px -16px -16px;
 `;
 
+const ActionsBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0);
+  padding: 0.5rem;
+  margin-bottom: 0.6rem;
+  z-index: 1;
+`;
+
 interface ExhibitionCardProps {
   exhibition: Exhibition;
 }
 
 const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
   const [artworkIds, setArtworkIds] = useState<ArtworkId[]>([]);
+  const [selectedExhibition, setSelectedExhibition] =
+    useState<Exhibition>(exhibition);
+  const { open, isOpen, close } = useModal();
   const location = useLocation();
 
   useEffect(() => {
@@ -65,22 +88,51 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
 
   const exhibitionUrl = `${location.pathname}/${exhibition.exhibition_name}`;
 
+  const handleOpenModal = (exhibition: Exhibition) => {
+    setSelectedExhibition(exhibition);
+    open();
+  };
+
   return (
-    <Container>
-      <Link to={exhibitionUrl} state={{ exhibition: exhibition }}>
-        <ImageGrid>
-          {artworkIds.map((artwork_id, index) => {
-            return (
-              <CardImage key={index} artwork_id={artwork_id} index={index} />
-            );
-          })}
-        </ImageGrid>
-      </Link>
-      <Footer>
-        <Title>{exhibition.exhibition_name}</Title>
-        <p>{artworkIds.length} artworks</p>
-      </Footer>
-    </Container>
+    <>
+      <Container>
+        <Link to={exhibitionUrl} state={{ exhibition: exhibition }}>
+          <ImageGrid>
+            {artworkIds.map((artwork_id, index) => {
+              return (
+                <>
+                  <CardImage
+                    key={index}
+                    artwork_id={artwork_id}
+                    index={index}
+                  />
+                </>
+              );
+            })}
+          </ImageGrid>
+        </Link>
+        <ActionsBar>
+          <Button
+            icon={faPenToSquare}
+            onClick={() => handleOpenModal(exhibition)}
+          />
+        </ActionsBar>
+        <Footer>
+          <Title>{exhibition.exhibition_name}</Title>
+          <p>{artworkIds.length} artworks</p>
+        </Footer>
+      </Container>
+      <Modal
+        isOpen={isOpen}
+        close={close}
+        content={
+          <EditExhibition
+            selectedExhibition={selectedExhibition}
+            onClose={close}
+          />
+        }
+      />
+    </>
   );
 };
 
