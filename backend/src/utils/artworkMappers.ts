@@ -1,7 +1,7 @@
 export const mapArtworks = (data: any, source: string, config?: any, pagination?: any) => {
   switch (source) {
     case 'aic': {
-      const { id, title, artist_title, medium_display, date_display, thumbnail, image_id, description, short_description, place_of_origin, dimensions, is_on_view, gallery_title, category_titles } = data;
+      const { id, title, artist_title, medium_display, date_display, thumbnail, image_id, is_on_view, gallery_title } = data;
       return {
         id,
         title,
@@ -9,17 +9,12 @@ export const mapArtworks = (data: any, source: string, config?: any, pagination?
         medium: medium_display,
         date: date_display,
         images: {
-          lqip: thumbnail?.lqip || null,
           alt_text: thumbnail?.alt_text || null,
           iiif_url: `${config.iiif_url}/${image_id}/full/843,/0/default.jpg`,
         },
-        description: description?.replace(/<\/?[^>]+(>|$)/g, "") || short_description?.replace(/<\/?[^>]+(>|$)/g, "") || null,
-        place_of_origin,
-        dimensions,
         is_on_view,
         gallery: is_on_view ? 'Art Institute Chicago': null,
         location: gallery_title || null,
-        categories: category_titles,
         api: 'aic',
       }
     }
@@ -34,7 +29,7 @@ export const mapArtworks = (data: any, source: string, config?: any, pagination?
         medium: objectType,
         date: _primaryDate,
         images: {
-          thumbnail: _images?._primary_thumbnail || null,
+          alt_text: `An image of the artwork ${_primaryTitle} by ${_primaryMaker?.name || _primaryMaker[0]?.name}`,
           iiif_url: `${_images?._iiif_image_base_url}full/full/0/default.jpg` || null,
         },
         is_on_view: _currentLocation.onDisplay,
