@@ -8,6 +8,7 @@ import BrowseArtworks from "./components/Artwork/BrowseArtworks";
 import ExhibitionsPage from "./components/Exhibitions/ExhibitionsPage";
 import ExhibitionPage from "./components/ViewExhibition/ExhibitionPage";
 import ArtworkPage from "./components/ViewExhibition/ArtworkPage";
+import Home from "./components/Home/Home";
 
 const App: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<SignIn />} />
+          <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/browse-artworks" element={<BrowseArtworks />} />
           <Route path="/:userId/exhibitions" element={<ExhibitionsPage />} />

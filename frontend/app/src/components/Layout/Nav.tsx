@@ -1,6 +1,7 @@
 import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuth } from "../../contexts/Auth";
 
 const StyledNav = styled.div`
   font-size: 18px;
@@ -26,46 +27,52 @@ const StyledNav = styled.div`
 const SignOut = styled.p`
   background-color: #845a8c;
   color: white;
-  padding: 0.3rem;
+  padding: 0.4rem;
   border-radius: 2px;
+  cursor: pointer;
 `;
 
-interface NavProps {
-  userId: string;
-}
-
-const Nav: React.FC<NavProps> = ({ userId }) => {
+const Nav: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  const handleLogout = async () => {
+  const handleSignOut = async () => {
     const auth = getAuth();
     await signOut(auth);
-    navigate("/sign-in");
+    navigate("/");
   };
 
-  return (
-    <StyledNav>
-      <Link
-        to="browse-artworks"
-        style={{
-          textDecoration: "none",
-          color: "black",
-        }}
-      >
-        Browse Artworks
-      </Link>
-      <Link
-        to={`/${userId}/exhibitions`}
-        style={{
-          textDecoration: "none",
-          color: "black",
-        }}
-      >
-        My Exhibitions
-      </Link>
-      <SignOut onClick={handleLogout}>Sign Out</SignOut>
-    </StyledNav>
-  );
+  const handleSignIn = () => {
+    navigate("/sign-in")
+  }
+
+  if (user) {
+    return (
+      <StyledNav>
+        <Link
+          to="browse-artworks"
+          style={{
+            textDecoration: "none",
+            color: "black",
+          }}
+        >
+          Browse Artworks
+        </Link>
+        <Link
+          to={`/${user.uid}/exhibitions`}
+          style={{
+            textDecoration: "none",
+            color: "black",
+          }}
+        >
+          My Exhibitions
+        </Link>
+        <SignOut onClick={handleSignOut}>Sign Out</SignOut>
+      </StyledNav>
+    );
+  } else {
+    return <SignOut onClick={handleSignIn}>Sign In</SignOut>;
+  }
 };
 
 export default Nav;

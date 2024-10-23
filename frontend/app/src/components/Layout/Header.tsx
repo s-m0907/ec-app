@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useAuth } from "../../contexts/Auth";
 import Nav from "./Nav";
 
 const StyledHeader = styled.header`
@@ -33,18 +32,12 @@ const Title = styled.h1`
 `;
 
 const Header: React.FC = () => {
-  const { user } = useAuth();
-
-  if (user) {
-    return (
-      <StyledHeader>
-        <Title>Exhibition Curator</Title>
-        <Nav userId={user.uid} />
-      </StyledHeader>
-    );
-  } else {
-    return <></>;
-  }
+  return (
+    <StyledHeader>
+      <Title>Exhibition Curator</Title>
+      <Nav />
+    </StyledHeader>
+  );
 };
 
 export default Header;
