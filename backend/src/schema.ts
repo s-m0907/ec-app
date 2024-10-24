@@ -7,9 +7,7 @@ type ArtworksResponse {
 }
 
 type Images {
-  lqip: String
   alt_text: String
-  thumbnail: String
   iiif_url: String
   copyright: String
 }
