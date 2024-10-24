@@ -1,13 +1,7 @@
-export interface ArtworkId {
-  api: string;
-  artwork_id: string;
-  iiif: string;
-}
-
 export interface Exhibition {
   id: string;
   exhibition_name: string;
-  artwork_ids: ArtworkId[];
+  exhibition_artworks: Artwork[];
 }
 
 export interface Artwork {

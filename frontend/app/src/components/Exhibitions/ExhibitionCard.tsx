@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArtworkId, Exhibition } from "../../types";
+import { Artwork, Exhibition } from "../../types";
 import useModal from "../../hooks/useModal";
 import styled from "styled-components";
 import CardImage from "./CardImage";
@@ -75,7 +75,7 @@ interface ExhibitionCardProps {
 }
 
 const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
-  const [artworkIds, setArtworkIds] = useState<ArtworkId[]>([]);
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [selectedExhibition, setSelectedExhibition] =
     useState<Exhibition>(exhibition);
   const [toastMessage, setToastMessage] = useState<string>("");
@@ -84,7 +84,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
 
   useEffect(() => {
     if (exhibition) {
-      setArtworkIds(exhibition.artwork_ids);
+      setArtworks(exhibition.exhibition_artworks);
     }
   }, [exhibition]);
 
@@ -104,12 +104,12 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
       <Container>
         <Link to={exhibitionUrl} state={{ exhibition: exhibition }}>
           <ImageGrid>
-            {artworkIds.map((artwork_id, index) => {
+            {artworks.map((artwork, index) => {
               return (
                 <>
                   <CardImage
                     key={index}
-                    artwork_id={artwork_id}
+                    artworkImage={artwork.images.iiif_url}
                     index={index}
                   />
                 </>
@@ -125,7 +125,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
         </ActionsBar>
         <Footer>
           <Title>{exhibition.exhibition_name}</Title>
-          <p>{artworkIds.length} artworks</p>
+          <p>{artworks.length} artworks</p>
         </Footer>
       </Container>
       <Modal

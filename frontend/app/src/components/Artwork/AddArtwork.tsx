@@ -6,6 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/Auth";
 import { Navigate } from "react-router-dom";
 import { Exhibition } from "../../types";
+import { gql, useApolloClient } from "@apollo/client";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,6 +37,31 @@ const Input = styled.input`
   font-size: 16px;
 `;
 
+const GET_ARTWORK = gql`
+  query Artwork($artworkId: String, $api: String) {
+    artwork(id: $artworkId, api: $api) {
+      id
+      title
+      artist
+      medium
+      date
+      images {
+        alt_text
+        iiif_url
+        copyright
+      }
+      description
+      place_of_origin
+      dimensions
+      is_on_view
+      gallery
+      location
+      categories
+      api
+    }
+  }
+`;
+
 interface AddArtworkProps {
   selectedArtwork: any;
   onClose: () => void;
@@ -52,6 +78,7 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
   const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false);
   const [error, setError] = useState("");
   const { user } = useAuth();
+  const client = useApolloClient();
 
   useEffect(() => {
     const fetchExhibitions = async () => {
@@ -83,14 +110,20 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
     }
 
     try {
-      const iiif_url = selectedArtwork.images.iiif_url;
-      await addArtwork(
-        user.uid,
-        exhibitionName,
-        selectedArtwork.id,
-        selectedArtwork.api,
-        iiif_url
-      );
+      const { data } = await client.query({
+        query: GET_ARTWORK,
+        variables: {
+          artworkId: selectedArtwork.id,
+          api: selectedArtwork.api,
+        },
+      });
+      const artworkToSave = JSON.parse(JSON.stringify(data.artwork));
+
+      if (artworkToSave.api === "v&a") {
+        artworkToSave.gallery = selectedArtwork.gallery;
+        artworkToSave.location = selectedArtwork.location;
+      }
+      await addArtwork(user.uid, exhibitionName, artworkToSave);
       onClose();
       setToastMessage(`Artwork added to exhibition ${exhibitionName}`);
       resetForm();

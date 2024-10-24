@@ -15,7 +15,7 @@ const ExhibitionPage: React.FC = () => {
   return (
     <>
       <Title>{exhibition.exhibition_name}</Title>
-      <ExhibitionWorks artwork_ids={exhibition.artwork_ids} />
+      <ExhibitionWorks exhibitionArtworks={exhibition.exhibition_artworks} />
     </>
   );
 };
