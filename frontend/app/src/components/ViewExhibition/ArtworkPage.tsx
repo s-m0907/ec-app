@@ -43,8 +43,6 @@ const Location = styled.h6`
   text-align: right;
 `;
 
-const Dl = styled.dl``;
-
 const Dt = styled.dt`
   color: #707070;
   margin: 0 0 0.1rem 0;
@@ -78,7 +76,7 @@ const ArtworkPage: React.FC = () => {
             <Location>{artwork.location}</Location>
           </>
         )}
-        <Dl>
+        <dl>
           {artwork.medium && (
             <>
               <Dt>Medium</Dt>
@@ -111,7 +109,7 @@ const ArtworkPage: React.FC = () => {
               ? null
               : artwork.images.copyright}
           </Dd>
-        </Dl>
+        </dl>
       </InfoText>
     </Wrapper>
   );

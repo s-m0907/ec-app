@@ -9,7 +9,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { Exhibition } from "../types";
+import { Artwork, Exhibition } from "../types";
 
 export const addUser = async (username: string, email: string, uid: string) => {
   try {
@@ -35,7 +35,7 @@ export const getExhibitions = async (userId: string) => {
       exhibitions.push({
         id: doc.id,
         exhibition_name: data.exhibition_name || "",
-        artwork_ids: data.artwork_ids || [],
+        exhibition_artworks: data.exhibition_artworks || [],
       } as Exhibition);
     });
     return exhibitions;
@@ -47,9 +47,7 @@ export const getExhibitions = async (userId: string) => {
 export const addArtwork = async (
   userId: string,
   exhibition_name: string,
-  artwork_id: number | string,
-  api: string,
-  iiif: string,
+  exhibitionArtwork: Artwork,
 ) => {
   try {
     const exhibitionRef = doc(
@@ -64,11 +62,7 @@ export const addArtwork = async (
       exhibitionRef,
       {
         exhibition_name: exhibition_name,
-        artwork_ids: arrayUnion({
-          artwork_id: artwork_id,
-          api: api,
-          iiif: iiif,
-        }),
+        exhibition_artworks: arrayUnion(exhibitionArtwork),
       },
       { merge: true },
     );
@@ -95,14 +89,14 @@ export const removeArtwork = async (
 
     const querySnapshot = await getDoc(exhibitionRef);
     const data = querySnapshot.data() as Exhibition;
-    const artwork_array = data?.artwork_ids;
+    const artwork_array = data?.exhibition_artworks;
 
     const updated_artwork_array = artwork_array.filter(
-      (artwork) => artwork.artwork_id !== artwork_id_to_remove,
+      (artwork) => artwork.id !== artwork_id_to_remove,
     );
 
     await updateDoc(exhibitionRef, {
-      artwork_ids: updated_artwork_array,
+      exhibition_artworks: updated_artwork_array,
     });
     console.log("Artwork removed from firestore");
   } catch (error) {
@@ -110,12 +104,14 @@ export const removeArtwork = async (
   }
 };
 
-export const deleteExhibition = async (userId: string, exhibitionName: string) => {
-try {
-  await deleteDoc(doc(db, "users", userId, "exhibitions", exhibitionName));
-  console.log("Exhibition deleted")
-} catch (error) {
-  console.error("Could not delete Exhibition")
-}
-}
-
+export const deleteExhibition = async (
+  userId: string,
+  exhibitionName: string,
+) => {
+  try {
+    await deleteDoc(doc(db, "users", userId, "exhibitions", exhibitionName));
+    console.log("Exhibition deleted");
+  } catch (error) {
+    console.error("Could not delete Exhibition");
+  }
+};

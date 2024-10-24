@@ -22,9 +22,7 @@ const GET_ARTWORKS = gql`
         medium
         date
         images {
-          lqip
           alt_text
-          thumbnail
           iiif_url
           copyright
         }
