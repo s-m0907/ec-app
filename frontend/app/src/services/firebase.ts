@@ -27,7 +27,7 @@ export const getUser = async (userId: string): Promise<User | null> => {
   try {
     const userDocRef = doc(db, "users", userId);
     const userDoc = await getDoc(userDocRef);
-    
+
     if (userDoc.exists()) {
       return { id: userDoc.id, ...userDoc.data() } as User;
     } else {
@@ -38,8 +38,7 @@ export const getUser = async (userId: string): Promise<User | null> => {
     console.error("Error fetching user: ", error);
     throw new Error("Could not fetch user data");
   }
-}
-
+};
 
 export const getExhibitions = async (userId: string) => {
   try {

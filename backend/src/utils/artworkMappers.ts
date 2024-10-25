@@ -1,4 +1,4 @@
-export const mapArtworks = (data: any, source: string, config?: any, pagination?: any) => {
+export const mapArtworks = (data: any, source: string, config?: any) => {
   switch (source) {
     case 'aic': {
       const { id, title, artist_title, medium_display, date_display, thumbnail, image_id, is_on_view, gallery_title } = data;

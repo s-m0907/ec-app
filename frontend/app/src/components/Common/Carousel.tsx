@@ -141,13 +141,13 @@ const Carousel: React.FC<CarouselProps> = ({
 
   const goToNextSlide = (): void => {
     setIndex((prevIndex) =>
-      prevIndex === artworks.length - 1 ? 0 : prevIndex + 1
+      prevIndex === artworks.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
   const goToPreviousSlide = (): void => {
     setIndex((prevIndex) =>
-      prevIndex === 0 ? artworks.length - 1 : prevIndex - 1
+      prevIndex === 0 ? artworks.length - 1 : prevIndex - 1,
     );
   };
 

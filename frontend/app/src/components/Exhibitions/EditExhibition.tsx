@@ -29,14 +29,14 @@ const EditExhibition: React.FC<EditExhibitionProps> = ({
       return;
     }
     const userConfirmed = confirm(
-      "Are you sure you want to delete this exhibition?"
+      "Are you sure you want to delete this exhibition?",
     );
     if (userConfirmed) {
       try {
         await deleteExhibition(userId, exhibitionName);
         onClose();
         setToastMessage(
-          `'${selectedExhibition.exhibition_name}' exhibition deleted`
+          `'${selectedExhibition.exhibition_name}' exhibition deleted`,
         );
       } catch (error) {
         console.error("Could not delete Exhibition: ", error);

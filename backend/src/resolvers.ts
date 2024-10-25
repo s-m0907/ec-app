@@ -15,7 +15,7 @@ const resolvers = {
         const { data: aicData, config: aicConfig, pagination: aicPagination } = aicResponse
         const { records: vaData, info: vaInfo } = vaResponse
 
-        const aicArtworks = aicData.map(item => mapArtworks(item, 'aic', aicConfig, aicPagination))
+        const aicArtworks = aicData.map(item => mapArtworks(item, 'aic', aicConfig))
         const vaArtworks = vaData.map(item => mapArtworks(item, 'v&a', vaInfo))
         
         return {
