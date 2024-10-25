@@ -78,7 +78,7 @@ const WelcomeButton = styled(Link)`
 const Welcome: React.FC = () => {
   return (
     <WelcomeSection>
-      <WelcomeTitle>Welcome to Exhibition Curator</WelcomeTitle>
+      <WelcomeTitle>Welcome to Art Sleuth</WelcomeTitle>
       <WelcomeSubtitle>Explore Artworks and Create Exhibitions</WelcomeSubtitle>
       <WelcomeButton to="/sign-in">Get Started</WelcomeButton>
     </WelcomeSection>

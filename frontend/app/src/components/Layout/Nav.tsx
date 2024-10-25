@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/Auth";
 import { useEffect, useState } from "react";
-import { getUser } from "../../services/firebase";
+import { getUser } from "../../services/db";
 import User from "../Common/User";
 
 const StyledNav = styled.div`

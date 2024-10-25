@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { removeArtwork } from "../../services/firebase";
+import { removeArtwork } from "../../services/db";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";

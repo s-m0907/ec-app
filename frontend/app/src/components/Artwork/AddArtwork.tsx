@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addArtwork, getExhibitions } from "../../services/firebase";
+import { addArtwork, getExhibitions } from "../../services/db";
 import styled from "styled-components";
 import Button from "../Common/Button";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
