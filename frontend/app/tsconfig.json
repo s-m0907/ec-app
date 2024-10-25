@@ -22,6 +22,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-, "src/services/api.ts"  ]
+    "src",
+    "src/services/api.ts",
+    "cypress/**/*.ts"  
+  ]
 }

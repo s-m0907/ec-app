@@ -1,7 +1,3 @@
-import dotenv from "dotenv";
-
-dotenv.config();
-
 describe("Sign In E2E Test", () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/sign-in');
@@ -9,8 +5,8 @@ describe("Sign In E2E Test", () => {
 
   it("should successfully log in with valid credentials and redirect to dashboard", () => {
 
-    cy.get('input[type="email"]').type('test-user@email.com');
-    cy.get('input[type="password"]').type('test-password123');
+    cy.get('input[type="email"]').type(Cypress.env('test_user_email'));
+    cy.get('input[type="password"]').type(Cypress.env('test_user_password'));
 
     cy.get('button[type="submit"]').click();
 

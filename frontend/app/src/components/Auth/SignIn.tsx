@@ -139,7 +139,10 @@ const SignIn: React.FC = () => {
         </form>
       </Container>
       <Container>
-        <SignUpToggle aria-label="sign-up-toggle" onClick={() => setIsSignUp(!isSignUp)}>
+        <SignUpToggle
+          aria-label="sign-up-toggle"
+          onClick={() => setIsSignUp(!isSignUp)}
+        >
           {isSignUp
             ? "Have an account? Sign In"
             : `Don't have an account? Sign up`}

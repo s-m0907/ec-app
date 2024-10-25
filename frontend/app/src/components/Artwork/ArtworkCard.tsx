@@ -79,23 +79,23 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
     <Container>
       <ImageWrapper>
         {imgSrc ? (
-        <Img
-          src={imgSrc}
-          alt={artwork.images.alt_text || artwork.title}
-          onError={() => setImgSrc(null)}
-          onClick={() => {
-            if (
-              variant === "exhibition" &&
-              openCarouselModal &&
-              index !== undefined
-            ) {
-              openCarouselModal(index);
-            }
-          }}
-        />
-      ) : (
-        <Placeholder />
-      )}
+          <Img
+            src={imgSrc}
+            alt={artwork.images.alt_text || artwork.title}
+            onError={() => setImgSrc(null)}
+            onClick={() => {
+              if (
+                variant === "exhibition" &&
+                openCarouselModal &&
+                index !== undefined
+              ) {
+                openCarouselModal(index);
+              }
+            }}
+          />
+        ) : (
+          <Placeholder />
+        )}
         <ActionsBar>
           {variant === "exhibition" ? (
             <Button icon={faPenToSquare} onClick={onClick} />

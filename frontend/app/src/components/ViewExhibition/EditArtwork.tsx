@@ -28,14 +28,14 @@ const EditArtwork: React.FC<EditArtworkProps> = ({
       return;
     }
     const userConfirmed = confirm(
-      `Are you sure you want to remove this from ${exhibitionName}?`
+      `Are you sure you want to remove this from ${exhibitionName}?`,
     );
     if (userConfirmed) {
       try {
         await removeArtwork(userId, exhibitionName, artwork_id);
         onClose();
         setToastMessage(
-          `${selectedArtwork.title} removed from ${exhibitionName}`
+          `${selectedArtwork.title} removed from ${exhibitionName}`,
         );
       } catch (error) {
         console.error("Could not remove artwork: ", error);

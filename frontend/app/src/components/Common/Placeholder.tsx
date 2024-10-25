@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const ImagePlaceholder = styled.div`
   height: 25vw;
@@ -30,7 +30,11 @@ const PlaceholderText = styled.p`
 `;
 
 const Placeholder: React.FC = () => {
-    return <ImagePlaceholder><PlaceholderText>No Image</PlaceholderText></ImagePlaceholder>
-  };
-  
-  export default Placeholder;
+  return (
+    <ImagePlaceholder>
+      <PlaceholderText>No Image</PlaceholderText>
+    </ImagePlaceholder>
+  );
+};
+
+export default Placeholder;

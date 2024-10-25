@@ -36,25 +36,25 @@ const SignOut = styled.p`
 `;
 
 const Nav: React.FC = () => {
-  const [username, setUsername] = useState<string>('')
+  const [username, setUsername] = useState<string>("");
   const navigate = useNavigate();
   const { user } = useAuth();
 
   useEffect(() => {
-    if(user) {
+    if (user) {
       const fetchUserData = async () => {
         try {
           const data = await getUser(user.uid);
-          if(data) {
+          if (data) {
             setUsername(data.username);
           }
         } catch (error) {
           console.error("Could not fetch user data");
         }
-        }
+      };
       fetchUserData();
     }
-  }, [user])
+  }, [user]);
 
   const handleSignOut = async () => {
     const auth = getAuth();
@@ -63,8 +63,8 @@ const Nav: React.FC = () => {
   };
 
   const handleSignIn = () => {
-    navigate("/sign-in")
-  }
+    navigate("/sign-in");
+  };
 
   if (user) {
     return (
@@ -88,7 +88,7 @@ const Nav: React.FC = () => {
           My Exhibitions
         </Link>
         <SignOut onClick={handleSignOut}>Sign Out</SignOut>
-        {username ? <User username={username}/> : <></>}
+        {username ? <User username={username} /> : <></>}
       </StyledNav>
     );
   } else {

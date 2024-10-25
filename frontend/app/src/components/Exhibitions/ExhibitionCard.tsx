@@ -104,7 +104,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
       <Container>
         <Link to={exhibitionUrl} state={{ exhibition: exhibition }}>
           <ImageGrid>
-            {artworks.slice(0,3).map((artwork, index) => {
+            {artworks.slice(0, 3).map((artwork, index) => {
               return (
                 <>
                   <CardImage
