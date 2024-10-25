@@ -102,16 +102,16 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
   return (
     <>
       <Container>
-        <Link to={exhibitionUrl} state={{ exhibition: exhibition }}>
+        <Link
+          to={exhibitionUrl}
+          state={{ exhibition: exhibition }}
+          aria-label={`Navigate to your ${exhibition.id} exhibition`}
+        >
           <ImageGrid>
             {artworks.slice(0, 3).map((artwork, index) => {
               return (
                 <>
-                  <CardImage
-                    key={artwork.id}
-                    artworkImage={artwork.images.iiif_url}
-                    index={index}
-                  />
+                  <CardImage key={artwork.id} artwork={artwork} index={index} />
                 </>
               );
             })}
@@ -119,6 +119,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
         </Link>
         <ActionsBar>
           <Button
+            label={"Edit Exhibition"}
             icon={faPenToSquare}
             onClick={() => handleOpenModal(exhibition)}
           />

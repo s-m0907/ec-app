@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Artwork } from "../../types";
 
 const Img = styled.img`
   width: 100%;
@@ -25,26 +26,26 @@ grid-column: 2 / 2;
 `;
 
 interface CardImageProps {
-  artworkImage: string;
+  artwork: Artwork;
   index: number;
 }
 
-const CardImage: React.FC<CardImageProps> = ({ artworkImage, index }) => {
+const CardImage: React.FC<CardImageProps> = ({ artwork, index }) => {
   return (
     <>
       {index === 0 && (
         <Image1>
-          <Img src={artworkImage} />
+          <Img src={artwork.images.iiif_url} alt={artwork.images.alt_text} />
         </Image1>
       )}
       {index === 1 && (
         <Image2>
-          <Img src={artworkImage} />
+          <Img src={artwork.images.iiif_url} alt={artwork.images.alt_text} />
         </Image2>
       )}
       {index === 2 && (
         <Image3>
-          <Img src={artworkImage} />
+          <Img src={artwork.images.iiif_url} alt={artwork.images.alt_text} />
         </Image3>
       )}
     </>

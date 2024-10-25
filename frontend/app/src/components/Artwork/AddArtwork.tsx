@@ -159,8 +159,9 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
       <Container>
         {!isCreatingNew ? (
           <Button
+            label={"Create a new exhibition"}
             onClick={() => setIsCreatingNew(true)}
-            body={"Add new Exhibition"}
+            body={"Add new exhibition"}
           />
         ) : (
           <>
@@ -171,6 +172,7 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
               required
             ></Input>
             <Button
+              label={"Add artwork to new exhibition"}
               onClick={() => handleAdd(exhibitionName)}
               icon={faPlus}
               radius="pill"
