@@ -2,6 +2,9 @@ import { getAuth, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/Auth";
+import { useEffect, useState } from "react";
+import { getUser } from "../../services/firebase";
+import User from "../Common/User";
 
 const StyledNav = styled.div`
   font-size: 18px;
@@ -33,8 +36,25 @@ const SignOut = styled.p`
 `;
 
 const Nav: React.FC = () => {
+  const [username, setUsername] = useState<string>('')
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  useEffect(() => {
+    if(user) {
+      const fetchUserData = async () => {
+        try {
+          const data = await getUser(user.uid);
+          if(data) {
+            setUsername(data.username);
+          }
+        } catch (error) {
+          console.error("Could not fetch user data");
+        }
+        }
+      fetchUserData();
+    }
+  }, [user])
 
   const handleSignOut = async () => {
     const auth = getAuth();
@@ -68,6 +88,7 @@ const Nav: React.FC = () => {
           My Exhibitions
         </Link>
         <SignOut onClick={handleSignOut}>Sign Out</SignOut>
+        {username ? <User username={username}/> : <></>}
       </StyledNav>
     );
   } else {

@@ -9,7 +9,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { Artwork, Exhibition } from "../types";
+import { Artwork, Exhibition, User } from "../types";
 
 export const addUser = async (username: string, email: string, uid: string) => {
   try {
@@ -22,6 +22,24 @@ export const addUser = async (username: string, email: string, uid: string) => {
     console.error("Error adding document: ", e);
   }
 };
+
+export const getUser = async (userId: string): Promise<User | null> => {
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+    
+    if (userDoc.exists()) {
+      return { id: userDoc.id, ...userDoc.data() } as User;
+    } else {
+      console.warn(`User with ID ${userId} not found.`);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user: ", error);
+    throw new Error("Could not fetch user data");
+  }
+}
+
 
 export const getExhibitions = async (userId: string) => {
   try {
