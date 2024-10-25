@@ -29,6 +29,7 @@ const StyledButton = styled.button<ButtonProps>`
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   body?: string;
   onClick: () => void;
+  label: string;
   icon?: IconProp;
   radius?: "pill";
   color?: string;
@@ -36,13 +37,20 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: React.FC<ButtonProps> = ({
   icon,
+  label,
   body,
   onClick,
   radius,
   color,
 }) => {
   return (
-    <StyledButton onClick={onClick} radius={radius} color={color}>
+    <StyledButton
+      label={label}
+      aria-label={label}
+      onClick={onClick}
+      radius={radius}
+      color={color}
+    >
       {icon && <FontAwesomeIcon icon={icon} />}
       {body}
     </StyledButton>

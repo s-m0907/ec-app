@@ -24,7 +24,7 @@ const ImagePlaceholder = styled.div`
 
 const PlaceholderText = styled.p`
   font-weight: bold;
-  color: #4681f4;
+  color: #135df1;
   text-align: center;
   margin: 0;
 `;

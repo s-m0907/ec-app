@@ -98,13 +98,22 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         )}
         <ActionsBar>
           {variant === "exhibition" ? (
-            <Button icon={faPenToSquare} onClick={onClick} />
+            <Button
+              label={"Edit artwork"}
+              icon={faPenToSquare}
+              onClick={onClick}
+            />
           ) : (
-            <Button icon={faHeart} color={"#dd7973"} onClick={onClick} />
+            <Button
+              label={"Add artwork"}
+              icon={faHeart}
+              color={"#dd7973"}
+              onClick={onClick}
+            />
           )}
         </ActionsBar>
       </ImageWrapper>
-      <h2>{artwork.title}</h2>
+      <h2>{artwork.title || "Untitled"}</h2>
       <h3>{artwork.artist}</h3>
       <h4>{artwork.medium}</h4>
     </Container>

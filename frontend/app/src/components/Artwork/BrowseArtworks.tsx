@@ -96,8 +96,13 @@ const BrowseArtworks: React.FC = () => {
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
           icon={faArrowLeft}
+          label={"Previous page"}
         />
-        <Button onClick={handleNextPage} icon={faArrowRight} />
+        <Button
+          label={"Next page"}
+          onClick={handleNextPage}
+          icon={faArrowRight}
+        />
       </ButtonWrapper>
     </>
   );

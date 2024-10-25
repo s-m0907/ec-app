@@ -1,5 +1,5 @@
 import { addUser } from "./firebase";
-import { auth } from "../firebaseConfig";
+import { auth } from "./firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,

@@ -8,7 +8,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { db } from "./firebaseConfig";
 import { Artwork, Exhibition, User } from "../types";
 
 export const addUser = async (username: string, email: string, uid: string) => {
