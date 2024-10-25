@@ -10,7 +10,7 @@ import {
 } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
+  uri: "https://ec-app-35ia.onrender.com",
   cache: new InMemoryCache(),
 });
 

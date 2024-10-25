@@ -19,6 +19,7 @@ export const signUp = async (
     );
     const user = userCredential.user;
     const uid = user.uid;
+    
     await addUser(username, email, uid);
     return user;
   } catch (error: any) {
