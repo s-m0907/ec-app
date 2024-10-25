@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { deleteExhibition } from "../../services/firebase";
+import { deleteExhibition } from "../../services/db";
 import { Exhibition } from "../../types";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,7 +1,7 @@
 import { useAuth } from "../../contexts/Auth";
 import { useEffect, useState } from "react";
 import { Exhibition } from "../../types";
-import { getExhibitions } from "../../services/firebase";
+import { getExhibitions } from "../../services/db";
 import styled from "styled-components";
 import ExhibitionCard from "./ExhibitionCard";
 

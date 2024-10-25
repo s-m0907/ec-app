@@ -34,7 +34,7 @@ const Title = styled.h1`
 const Header: React.FC = () => {
   return (
     <StyledHeader>
-      <Title>Exhibition Curator</Title>
+      <Title>Art Sleuth</Title>
       <Nav />
     </StyledHeader>
   );
