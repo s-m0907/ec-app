@@ -15,14 +15,14 @@ interface EditArtworkProps {
   selectedArtwork: Artwork;
   onClose: () => void;
   setToastMessage: (message: string) => void;
-  setDeletedArtwork: (deletedArtwork: Artwork) => void
+  setDeletedArtwork: (deletedArtwork: Artwork) => void;
 }
 
 const EditArtwork: React.FC<EditArtworkProps> = ({
   selectedArtwork,
   onClose,
   setToastMessage,
-  setDeletedArtwork
+  setDeletedArtwork,
 }) => {
   const { exhibitionName } = useParams();
   const { user } = useAuth();
@@ -33,15 +33,15 @@ const EditArtwork: React.FC<EditArtworkProps> = ({
       return;
     }
     const userConfirmed = confirm(
-      `Are you sure you want to remove this from ${exhibitionName}?`
+      `Are you sure you want to remove this from ${exhibitionName}?`,
     );
     if (userConfirmed) {
       try {
         await removeArtwork(user.uid, exhibitionName, artwork_id);
         onClose();
-        setDeletedArtwork(selectedArtwork)
+        setDeletedArtwork(selectedArtwork);
         setToastMessage(
-          `${selectedArtwork.title} removed from ${exhibitionName}`
+          `${selectedArtwork.title} removed from ${exhibitionName}`,
         );
       } catch (error) {
         console.error("Could not remove artwork: ", error);
