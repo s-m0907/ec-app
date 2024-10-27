@@ -72,12 +72,19 @@ const ActionsBar = styled.div`
 
 interface ExhibitionCardProps {
   exhibition: Exhibition;
+  setExhibitions: (
+    updater: (exhibitions: Exhibition[]) => Exhibition[],
+  ) => void;
 }
 
-const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
+const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
+  exhibition,
+  setExhibitions,
+}) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [selectedExhibition, setSelectedExhibition] =
     useState<Exhibition>(exhibition);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");
   const { open, isOpen, close } = useModal();
   const location = useLocation();
@@ -97,7 +104,30 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
 
   const handleToastClose = () => {
     setToastMessage("");
+    if (isDeleted && selectedExhibition) {
+      setExhibitions((prevExhibitions) =>
+        prevExhibitions.filter(
+          (exhibition) => exhibition.id !== selectedExhibition.id,
+        ),
+      );
+    }
+    setIsDeleted(false);
+    setSelectedExhibition(null);
   };
+
+  if (isDeleted) {
+    return (
+      <>
+        {toastMessage && (
+          <Toast
+            color={"#dc3545"}
+            message={toastMessage}
+            onClose={handleToastClose}
+          />
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -137,6 +167,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({ exhibition }) => {
             selectedExhibition={selectedExhibition}
             onClose={close}
             setToastMessage={setToastMessage}
+            setIsDeleted={setIsDeleted}
           />
         }
       />
