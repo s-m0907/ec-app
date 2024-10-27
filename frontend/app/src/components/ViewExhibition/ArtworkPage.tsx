@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -52,6 +52,33 @@ const Dd = styled.dd`
   margin: 0 0 1rem 0;
 `;
 
+const ExternalLink = styled(Link)`
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s;
+  text-align: right;
+
+  &::after {
+    content: " ↗";
+    font-size: 0.8em;
+    color: #6c757d;
+    position: absolute;
+    right: -20px;
+    top: 0;
+    transition: color 0.3s;
+  }
+
+  &:hover {
+    color: #0056b3;
+  }
+
+  &:hover::after {
+    color: #0056b3;
+  }
+`;
+
 const ArtworkPage: React.FC = () => {
   const location = useLocation();
 
@@ -75,6 +102,17 @@ const ArtworkPage: React.FC = () => {
             <Location>{artwork.gallery}</Location>
             <Location>{artwork.location}</Location>
           </>
+        )}
+        {artwork.api === "aic" && (
+          <ExternalLink to={`https://www.artic.edu/artworks/${artwork.id}`}>
+            Find out more about this artwork on the Art Institute of Chicago
+            site
+          </ExternalLink>
+        )}
+        {artwork.api === "v&a" && (
+          <ExternalLink to={`https://collections.vam.ac.uk/item/${artwork.id}`}>
+            Find out more about this artwork on the V&A site
+          </ExternalLink>
         )}
         <dl>
           {artwork.medium && (
