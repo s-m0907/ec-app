@@ -4,6 +4,7 @@ import { Exhibition } from "../../types";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { isErrorWithMessage } from "../../utils/errorMessage";
 
 const Action = styled.p`
   cursor: pointer;
@@ -13,7 +14,7 @@ const Action = styled.p`
 interface EditExhibitionProps {
   selectedExhibition: Exhibition;
   onClose: () => void;
-  setToastMessage: any;
+  setToastMessage: (message: string) => void;
 }
 
 const EditExhibition: React.FC<EditExhibitionProps> = ({
@@ -38,8 +39,12 @@ const EditExhibition: React.FC<EditExhibitionProps> = ({
         setToastMessage(
           `'${selectedExhibition.exhibition_name}' exhibition deleted`,
         );
-      } catch (error) {
-        console.error("Could not delete Exhibition: ", error);
+      } catch (error: unknown) {
+        if (isErrorWithMessage(error)) {
+          console.error("Could not delete Exhibition: ", error.message);
+        } else {
+          console.error("An unknown error occurred", error);
+        }
       }
     }
   };

@@ -1,3 +1,4 @@
+import { User } from "../types";
 import { addUser } from "./db";
 import { auth } from "./firebaseConfig";
 import {
@@ -10,7 +11,7 @@ export const signUp = async (
   email: string,
   password: string,
   username: string,
-) => {
+): Promise<User> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -21,29 +22,52 @@ export const signUp = async (
     const uid = user.uid;
 
     await addUser(username, email, uid);
-    return user;
-  } catch (error: any) {
-    throw new Error(error.message);
+    return {
+      id: uid,
+      email: user.email || "",
+      username: username,
+    };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("And unknown error occured during sign in");
+    }
   }
 };
 
-export const signIn = async (email: string, password: string) => {
+export const signIn = async (
+  email: string,
+  password: string,
+): Promise<User> => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
       password,
     );
-    return userCredential.user;
-  } catch (error: any) {
-    throw new Error(error.message);
+    const user = userCredential.user;
+    return {
+      id: user.uid,
+      email: user.email || "",
+    };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("And unknown error occured during sign in");
+    }
   }
 };
 
-export const logOut = async () => {
+export const logOut = async (): Promise<void> => {
   try {
     await signOut(auth);
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("And unknown error occured during sign in");
+    }
   }
 };

@@ -37,7 +37,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({
   exhibitionArtworks,
 }) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
-  const [selectedArtwork, setSelectedArtwork] = useState({});
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork>();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isCarouselOpen, setIsCarouselOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");

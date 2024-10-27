@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { signIn, signUp } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { isErrorWithMessage } from "../../utils/errorMessage";
 
 const Wrapper = styled.div`
   display: flex;
@@ -77,11 +78,11 @@ const SignUpToggle = styled.p`
 `;
 
 const SignIn: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [error, setError] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -94,9 +95,13 @@ const SignIn: React.FC = () => {
       const user = await signIn(email, password);
       console.log("User signed in:", user);
       navigate("/browse-artworks");
-    } catch (err: any) {
-      setError(err.message);
-      console.error("Sign-in failed:", err);
+    } catch (error: unknown) {
+      if (isErrorWithMessage(error)) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+      console.error("Sign-in failed:", error);
     }
   };
 
