@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn, signUp } from "../../services/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { isErrorWithMessage } from "../../utils/errorMessage";
 
@@ -84,6 +84,11 @@ const SignIn: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsSignUp(location.state?.signingUp || false);
+  }, [location.state?.signingUp]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

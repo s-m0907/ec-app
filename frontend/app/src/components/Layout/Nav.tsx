@@ -63,7 +63,7 @@ const Nav: React.FC = () => {
   };
 
   const handleSignIn = () => {
-    navigate("/sign-in");
+    navigate("/sign-in", { state: { signingUp: false } });
   };
 
   if (user) {

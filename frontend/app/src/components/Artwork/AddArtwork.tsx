@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Button from "../Common/Button";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/Auth";
-import { Navigate } from "react-router-dom";
 import { Artwork, Exhibition } from "../../types";
 import { gql, useApolloClient } from "@apollo/client";
 
@@ -90,13 +89,12 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
           console.error("Error fetching exhibitions", error);
         }
       }
+      if (exhibitions.length === 0 || !user) {
+        setIsCreatingNew(true);
+      }
     };
     fetchExhibitions();
-  }, [user]);
-
-  if (!user) {
-    return <Navigate to="sign-in" />;
-  }
+  }, [user, exhibitions.length]);
 
   const handleAdd = async (exhibitionName: string) => {
     if (!exhibitionName.trim()) {
@@ -105,7 +103,7 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
     }
 
     if (!user) {
-      setError("You must be logged in to add artwork.");
+      setError("You must be logged in to create an exhibition.");
       return;
     }
 
@@ -145,7 +143,11 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
 
   return (
     <Wrapper>
-      <strong>Which Exhibition do you want to add this to?</strong>
+      {exhibitions.length === 0 ? (
+        <strong>Create a new exhibition to add this artwork</strong>
+      ) : (
+        <strong>Which Exhibition do you want to add this to?</strong>
+      )}
       <Container>
         {exhibitions.map((exhibition) => {
           return (
