@@ -79,7 +79,7 @@ const Nav: React.FC = () => {
           Browse Artworks
         </Link>
         <Link
-          to={`/${user.uid}/exhibitions`}
+          to={`/${username}/exhibitions`}
           style={{
             textDecoration: "none",
             color: "black",

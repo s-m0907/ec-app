@@ -144,7 +144,10 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
   return (
     <Wrapper>
       {exhibitions.length === 0 ? (
-        <strong>Create a new exhibition to add this artwork</strong>
+        <strong>
+          You don&apos;t have any exhibitions yet. Create a new exhibition to
+          add this artwork.
+        </strong>
       ) : (
         <strong>Which Exhibition do you want to add this to?</strong>
       )}
