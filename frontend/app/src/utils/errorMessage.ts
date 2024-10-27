@@ -1,5 +1,5 @@
 export const isErrorWithMessage = (
-  error: unknown
+  error: unknown,
 ): error is { message: string } => {
   return (
     typeof error === "object" &&
