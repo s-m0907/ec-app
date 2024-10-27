@@ -1,6 +1,6 @@
 export interface User {
   id: string;
-  username: string;
+  username?: string;
   email: string;
 }
 
@@ -17,18 +17,16 @@ export interface Artwork {
   medium: string;
   date: string;
   images: {
-    lqip: string;
     alt_text: string;
-    thumbnail: string;
     iiif_url: string;
     copyright: string;
   };
-  description: string;
-  place_of_origin: string;
-  dimensions: string;
+  description?: string;
+  place_of_origin?: string;
+  dimensions?: string;
   is_on_view: boolean;
   location: string;
   gallery: string;
-  categories: [string];
+  categories?: [string];
   api: string;
 }

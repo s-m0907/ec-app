@@ -5,7 +5,7 @@ import Button from "../Common/Button";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/Auth";
 import { Navigate } from "react-router-dom";
-import { Exhibition } from "../../types";
+import { Artwork, Exhibition } from "../../types";
 import { gql, useApolloClient } from "@apollo/client";
 
 const Wrapper = styled.div`
@@ -63,9 +63,9 @@ const GET_ARTWORK = gql`
 `;
 
 interface AddArtworkProps {
-  selectedArtwork: any;
+  selectedArtwork: Artwork;
   onClose: () => void;
-  setToastMessage: any;
+  setToastMessage: (message: string) => void;
 }
 
 const AddArtwork: React.FC<AddArtworkProps> = ({
@@ -76,7 +76,7 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
   const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
   const [exhibitionName, setExhibitionName] = useState<string>("");
   const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>();
   const { user } = useAuth();
   const client = useApolloClient();
 
@@ -86,7 +86,7 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
         try {
           const data = await getExhibitions(user.uid);
           setExhibitions(data || []);
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error("Error fetching exhibitions", error);
         }
       }
@@ -127,9 +127,13 @@ const AddArtwork: React.FC<AddArtworkProps> = ({
       onClose();
       setToastMessage(`Artwork added to exhibition ${exhibitionName}`);
       resetForm();
-    } catch (error: any) {
-      setError(error.message);
-      console.error("Error: ", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occured");
+        console.error(error);
+      }
     }
   };
 

@@ -4,6 +4,7 @@ import { Exhibition } from "../../types";
 import { getExhibitions } from "../../services/db";
 import styled from "styled-components";
 import ExhibitionCard from "./ExhibitionCard";
+import { isErrorWithMessage } from "../../utils/errorMessage";
 
 const Grid = styled.div`
   display: flex;
@@ -27,8 +28,12 @@ const ExhibitionsList: React.FC = () => {
         try {
           const data = await getExhibitions(user.uid);
           setExhibitions(data || []);
-        } catch (error: any) {
-          console.error("Error fetching exhibitions", error);
+        } catch (error: unknown) {
+          if (isErrorWithMessage(error)) {
+            console.error("Error fetching exhibitions", error.message);
+          } else {
+            console.error("An unknown error occured", error);
+          }
         }
       }
     };

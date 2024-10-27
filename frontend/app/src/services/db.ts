@@ -11,7 +11,11 @@ import {
 import { db } from "./firebaseConfig";
 import { Artwork, Exhibition, User } from "../types";
 
-export const addUser = async (username: string, email: string, uid: string) => {
+export const addUser = async (
+  username: string,
+  email: string,
+  uid: string
+): Promise<void> => {
   try {
     const docRef = await setDoc(doc(db, "users", uid), {
       username: username,
@@ -40,10 +44,12 @@ export const getUser = async (userId: string): Promise<User | null> => {
   }
 };
 
-export const getExhibitions = async (userId: string) => {
+export const getExhibitions = async (
+  userId: string
+): Promise<Exhibition[] | null> => {
   try {
     const querySnapshot = await getDocs(
-      collection(db, "users", userId, "exhibitions"),
+      collection(db, "users", userId, "exhibitions")
     );
     const exhibitions: Exhibition[] = [];
 
@@ -58,21 +64,22 @@ export const getExhibitions = async (userId: string) => {
     return exhibitions;
   } catch (error) {
     console.error("Error fetching exhibitions: ", error);
+    throw new Error("could not fetch exhibition data");
   }
 };
 
 export const addArtwork = async (
   userId: string,
   exhibition_name: string,
-  exhibitionArtwork: Artwork,
-) => {
+  exhibitionArtwork: Artwork
+): Promise<void> => {
   try {
     const exhibitionRef = doc(
       db,
       "users",
       userId,
       "exhibitions",
-      exhibition_name,
+      exhibition_name
     );
 
     await setDoc(
@@ -81,7 +88,7 @@ export const addArtwork = async (
         exhibition_name: exhibition_name,
         exhibition_artworks: arrayUnion(exhibitionArtwork),
       },
-      { merge: true },
+      { merge: true }
     );
 
     console.log("Exhibition updated or created:", exhibition_name);
@@ -93,15 +100,15 @@ export const addArtwork = async (
 export const removeArtwork = async (
   userId: string,
   exhibition_name: string,
-  artwork_id_to_remove: number | string,
-) => {
+  artwork_id_to_remove: number | string
+): Promise<void> => {
   try {
     const exhibitionRef = doc(
       db,
       "users",
       userId,
       "exhibitions",
-      exhibition_name,
+      exhibition_name
     );
 
     const querySnapshot = await getDoc(exhibitionRef);
@@ -109,7 +116,7 @@ export const removeArtwork = async (
     const artwork_array = data?.exhibition_artworks;
 
     const updated_artwork_array = artwork_array.filter(
-      (artwork) => artwork.id !== artwork_id_to_remove,
+      (artwork) => artwork.id !== artwork_id_to_remove
     );
 
     await updateDoc(exhibitionRef, {
@@ -123,8 +130,8 @@ export const removeArtwork = async (
 
 export const deleteExhibition = async (
   userId: string,
-  exhibitionName: string,
-) => {
+  exhibitionName: string
+): Promise<void> => {
   try {
     await deleteDoc(doc(db, "users", userId, "exhibitions", exhibitionName));
     console.log("Exhibition deleted");

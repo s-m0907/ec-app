@@ -35,7 +35,7 @@ interface ArtworkListProps {
 }
 
 const ArtworkList: React.FC<ArtworkListProps> = ({ artworks, loading }) => {
-  const [selectedArtwork, setSelectedArtwork] = useState({});
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork>();
   const { open, isOpen, close } = useModal();
   const [toastMessage, setToastMessage] = useState<string>("");
 

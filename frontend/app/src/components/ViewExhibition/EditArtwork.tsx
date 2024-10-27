@@ -3,6 +3,7 @@ import { removeArtwork } from "../../services/db";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import { Artwork } from "../../types";
 
 const Action = styled.p`
   cursor: pointer;
@@ -10,9 +11,9 @@ const Action = styled.p`
 `;
 
 interface EditArtworkProps {
-  selectedArtwork: any;
+  selectedArtwork: Artwork;
   onClose: () => void;
-  setToastMessage: any;
+  setToastMessage: (message: string) => void;
 }
 
 const EditArtwork: React.FC<EditArtworkProps> = ({
