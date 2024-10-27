@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { Artwork } from "../../types";
+import { useAuth } from "../../contexts/Auth";
 
 const Action = styled.p`
   cursor: pointer;
@@ -14,29 +15,33 @@ interface EditArtworkProps {
   selectedArtwork: Artwork;
   onClose: () => void;
   setToastMessage: (message: string) => void;
+  setDeletedArtwork: (deletedArtwork: Artwork) => void
 }
 
 const EditArtwork: React.FC<EditArtworkProps> = ({
   selectedArtwork,
   onClose,
   setToastMessage,
+  setDeletedArtwork
 }) => {
-  const { userId, exhibitionName } = useParams();
+  const { exhibitionName } = useParams();
+  const { user } = useAuth();
 
   const handleRemove = async (artwork_id: string) => {
-    if (!userId || !exhibitionName) {
+    if (!user || !exhibitionName) {
       console.error("Missing user id or exhibition name from URL parameters.");
       return;
     }
     const userConfirmed = confirm(
-      `Are you sure you want to remove this from ${exhibitionName}?`,
+      `Are you sure you want to remove this from ${exhibitionName}?`
     );
     if (userConfirmed) {
       try {
-        await removeArtwork(userId, exhibitionName, artwork_id);
+        await removeArtwork(user.uid, exhibitionName, artwork_id);
         onClose();
+        setDeletedArtwork(selectedArtwork)
         setToastMessage(
-          `${selectedArtwork.title} removed from ${exhibitionName}`,
+          `${selectedArtwork.title} removed from ${exhibitionName}`
         );
       } catch (error) {
         console.error("Could not remove artwork: ", error);

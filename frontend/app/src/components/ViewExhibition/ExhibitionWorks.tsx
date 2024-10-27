@@ -42,14 +42,22 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({
   const [isCarouselOpen, setIsCarouselOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");
   const { open, isOpen, close } = useModal();
+  const [deletedArtwork, setDeletedArtwork] = useState<Artwork>(null);
 
   useEffect(() => {
     if (exhibitionArtworks.length === 0) {
       setArtworks([]);
       return;
     }
-    setArtworks(exhibitionArtworks);
-  }, [exhibitionArtworks]);
+    if (deletedArtwork) {
+      console.log(deletedArtwork, "to delete");
+      setArtworks((prevArtworks) =>
+        prevArtworks.filter((artwork) => artwork.id !== deletedArtwork.id),
+      );
+    } else {
+      setArtworks(exhibitionArtworks);
+    }
+  }, [exhibitionArtworks, deletedArtwork]);
 
   const handleOpenModal = (artwork: Artwork) => {
     setSelectedArtwork(artwork);
@@ -91,6 +99,7 @@ const ExhibitionWorks: React.FC<ExhibitionWorksProps> = ({
             selectedArtwork={selectedArtwork}
             onClose={close}
             setToastMessage={setToastMessage}
+            setDeletedArtwork={setDeletedArtwork}
           />
         }
       />
