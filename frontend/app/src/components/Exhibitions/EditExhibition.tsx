@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
 import { deleteExhibition } from "../../services/db";
 import { Exhibition } from "../../types";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { isErrorWithMessage } from "../../utils/errorMessage";
+import { useAuth } from "../../contexts/Auth";
 
 const Action = styled.p`
   cursor: pointer;
@@ -15,17 +15,19 @@ interface EditExhibitionProps {
   selectedExhibition: Exhibition;
   onClose: () => void;
   setToastMessage: (message: string) => void;
+  setIsDeleted: (isDeleted: boolean) => void;
 }
 
 const EditExhibition: React.FC<EditExhibitionProps> = ({
   selectedExhibition,
   onClose,
   setToastMessage,
+  setIsDeleted,
 }) => {
-  const { userId } = useParams();
+  const { user } = useAuth();
 
   const handleRemove = async (exhibitionName: string) => {
-    if (!userId) {
+    if (!user) {
       console.error("Missing user id from URL parameters.");
       return;
     }
@@ -34,7 +36,8 @@ const EditExhibition: React.FC<EditExhibitionProps> = ({
     );
     if (userConfirmed) {
       try {
-        await deleteExhibition(userId, exhibitionName);
+        await deleteExhibition(user.uid, exhibitionName);
+        setIsDeleted(true);
         onClose();
         setToastMessage(
           `'${selectedExhibition.exhibition_name}' exhibition deleted`,

@@ -5,6 +5,7 @@ import { getExhibitions } from "../../services/db";
 import styled from "styled-components";
 import ExhibitionCard from "./ExhibitionCard";
 import { isErrorWithMessage } from "../../utils/errorMessage";
+import { Link } from "react-router-dom";
 
 const Grid = styled.div`
   display: flex;
@@ -40,12 +41,31 @@ const ExhibitionsList: React.FC = () => {
     fetchExhibitions();
   }, [user]);
 
+  if (exhibitions.length === 0) {
+    return (
+      <>
+        <h3>
+          It looks like you haven&apos;t created any exhibitions yet.
+          <br />
+          <Link to="/browse-artworks">Browse and select artworks</Link> to
+          create a new exhibition.{" "}
+        </h3>
+      </>
+    );
+  }
+
   return (
     <>
       <Info>{exhibitions.length} Exhibitions</Info>
       <Grid>
         {exhibitions.map((exhibition) => {
-          return <ExhibitionCard key={exhibition.id} exhibition={exhibition} />;
+          return (
+            <ExhibitionCard
+              key={exhibition.id}
+              exhibition={exhibition}
+              setExhibitions={setExhibitions}
+            />
+          );
         })}
       </Grid>
     </>
