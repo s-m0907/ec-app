@@ -20,7 +20,7 @@ async function startApolloServer(typeDefs, resolvers) {
   const app = express();
 
   const corsOptions = {
-    origin: ['http://localhost:3000', 'https://artsleuth.netlify.app'],
+    origin: 'https://artsleuth.netlify.app',
     credentials: true,
   };
 
