@@ -44,7 +44,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <SearchWrapper>
       <Label htmlFor="search">Search artworks </Label>
-      <p>Enter keywords here to browse artworks. Like an artwork to save it to an exhibition!</p>
+      <p>
+        Enter keywords here to browse artworks. Like an artwork to save it to an
+        exhibition!
+      </p>
       <Input
         type="text"
         id="search"
