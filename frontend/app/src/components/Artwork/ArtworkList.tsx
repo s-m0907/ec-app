@@ -32,9 +32,14 @@ const Grid = styled.div`
 interface ArtworkListProps {
   artworks: Artwork[];
   loading: boolean;
+  error: Error;
 }
 
-const ArtworkList: React.FC<ArtworkListProps> = ({ artworks, loading }) => {
+const ArtworkList: React.FC<ArtworkListProps> = ({
+  artworks,
+  loading,
+  error,
+}) => {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork>();
   const { open, isOpen, close } = useModal();
   const [toastMessage, setToastMessage] = useState<string>("");
@@ -47,6 +52,15 @@ const ArtworkList: React.FC<ArtworkListProps> = ({ artworks, loading }) => {
   const handleToastClose = () => {
     setToastMessage("");
   };
+
+  if (error) {
+    return (
+      <Wrapper>
+        <FontAwesomeIcon icon={faFaceSadCry} size="xl" />
+        {error.message}
+      </Wrapper>
+    );
+  }
 
   return loading ? (
     <Wrapper>

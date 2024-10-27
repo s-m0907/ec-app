@@ -89,8 +89,7 @@ const BrowseArtworks: React.FC = () => {
   return (
     <>
       <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
-      {error && <>Error: {error.message}</>}
-      <ArtworkList artworks={artworks} loading={loading} />
+      <ArtworkList artworks={artworks} loading={loading} error={error} />
       <ButtonWrapper>
         <Button
           onClick={handlePreviousPage}
