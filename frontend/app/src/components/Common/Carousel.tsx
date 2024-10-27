@@ -132,6 +132,23 @@ const Dd = styled.dd`
   margin: 0 0 1rem 0;
 `;
 
+const InfoLink = styled(Link)`
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s;
+  text-align: right;
+
+  &:hover {
+    color: #0056b3;
+  }
+
+  &:hover::after {
+    color: #0056b3;
+  }
+`;
+
 const Carousel: React.FC<CarouselProps> = ({
   artworks,
   currentIndex,
@@ -189,14 +206,14 @@ const Carousel: React.FC<CarouselProps> = ({
                   <GalleryText>{currentArtwork.location}</GalleryText>
                 </>
               )}
-              <Link
+              <InfoLink
                 to={`/artworks/${currentArtwork.id}`}
                 state={{ artwork: currentArtwork }}
                 style={{ textDecoration: "none" }}
               >
                 More information{" "}
                 <FontAwesomeIcon icon={faInfoCircle} size="xl" />
-              </Link>
+              </InfoLink>
             </ArtworkLocation>
           </ArtworkInfo>
           <dl>
