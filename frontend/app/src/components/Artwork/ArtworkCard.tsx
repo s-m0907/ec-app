@@ -3,7 +3,12 @@ import Button from "../Common/Button";
 import Placeholder from "../Common/Placeholder";
 import { Artwork } from "../../types";
 import { useState } from "react";
-import { faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faInfoCircle,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Container = styled.div`
   flex: 1 1 calc(25% - 16px);
@@ -50,11 +55,23 @@ const ActionsBar = styled.div`
   z-index: 1;
 `;
 
+const InfoLink = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+
+  ${ImageWrapper}:hover & {
+    opacity: 1;
+  }
+`;
+
 const Img = styled.img`
   max-width: 100%;
-
-  &:hover {
-    cursor: pointer;
   }
 `;
 
@@ -83,6 +100,12 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
             src={imgSrc}
             alt={artwork.images.alt_text || artwork.title}
             onError={() => setImgSrc(null)}
+          />
+        ) : (
+          <Placeholder />
+        )}
+        {variant === "exhibition" && (
+          <InfoLink
             onClick={() => {
               if (
                 variant === "exhibition" &&
@@ -92,9 +115,9 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
                 openCarouselModal(index);
               }
             }}
-          />
-        ) : (
-          <Placeholder />
+          >
+            <FontAwesomeIcon icon={faInfoCircle} size="2x" />
+          </InfoLink>
         )}
         <ActionsBar>
           {variant === "exhibition" ? (
