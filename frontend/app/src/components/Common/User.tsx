@@ -6,7 +6,7 @@ const Username = styled.p`
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: #000000;
+  background-color: #807877;
   color: white;
   display: flex;
   justify-content: center;
