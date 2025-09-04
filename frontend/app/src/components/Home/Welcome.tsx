@@ -6,7 +6,7 @@ const WelcomeSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #ffbd03, #ff4b2b);
+  background: #807877;
   text-align: center;
   color: white;
   padding: 20px;
@@ -38,32 +38,19 @@ const WelcomeTitle = styled.h1`
   }
 `;
 
-const WelcomeSubtitle = styled.p`
-  font-size: 1.5rem;
-  margin-top: 10px;
-
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
-  }
-`;
-
 const WelcomeButton = styled(Link)`
   background-color: #fff;
-  border: solid #5adbb5;
+  border: solid #655ADB;
   color: black;
   padding: 10px 20px;
   border-radius: 6px;
   text-decoration: none;
   font-size: 1.25rem;
-  margin-top: 20px;
+  margin: 20px;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #5adbb5;
+    background-color: #655ADB;
   }
 
   @media (max-width: 768px) {
@@ -116,25 +103,21 @@ const Welcome: React.FC = () => {
   return (
     <WelcomeSection>
       <WelcomeTitle>Art Sleuth</WelcomeTitle>
-      <WelcomeSubtitle>
-        Explore 1000s of artworks and create your own exhibitions
-      </WelcomeSubtitle>
-      <WelcomeButton to="/browse-artworks">Get Started</WelcomeButton>
       <InfoGrid>
         <InfoCard>
           <InfoCardTitle>Discover Art</InfoCardTitle>
           <InfoCardDescription>
-            Browse 1000s of artworks and search for your favourites.
+            Browse artwork from museum collections and search for artists, themes, materials and more.
           </InfoCardDescription>
         </InfoCard>
         <InfoCard>
           <InfoCardTitle>Create Exhibitions</InfoCardTitle>
           <InfoCardDescription>
-            Build your own virtual exhibitions and learn more about each
-            artwork.
+            Add favorites to your own virtual exhibitions and learn more about each work.
           </InfoCardDescription>
         </InfoCard>
       </InfoGrid>
+      <WelcomeButton to="/browse-artworks">Get Started</WelcomeButton>
     </WelcomeSection>
   );
 };

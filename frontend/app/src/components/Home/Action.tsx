@@ -5,24 +5,24 @@ const ActionSection = styled.section`
   background-color: #f9f9f9;
   padding: 60px 20px;
   text-align: center;
-  color: #5adbb5;
+  color: #655ADB;
 `;
 
 const ActionTitle = styled.h2`
-  font-size: 2.2rem;
+  font-size: 2rem;
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.4rem;
   }
 
   @media (max-width: 480px) {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
 
 const ActionButton = styled(Link)`
-  background-color: #5adbb5;
+  background-color: #655ADB;
   color: white;
   padding: 10px 20px;
   border-radius: 6px;
@@ -48,9 +48,9 @@ const ActionButton = styled(Link)`
 const Action: React.FC = () => {
   return (
     <ActionSection>
-      <ActionTitle>Don&apos;t have an account?</ActionTitle>
+      <ActionTitle>Create an account to save your favorite artworks to exhibitions!</ActionTitle>
       <ActionButton to="/sign-in" state={{ signingUp: true }}>
-        Sign up!
+        Sign up
       </ActionButton>
     </ActionSection>
   );
