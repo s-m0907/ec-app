@@ -4,7 +4,7 @@ import Placeholder from "../Common/Placeholder";
 import { Artwork } from "../../types";
 import { useState } from "react";
 import {
-  faHeart,
+  faPlus,
   faInfoCircle,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
@@ -129,7 +129,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
           ) : (
             <Button
               label={"Add artwork"}
-              icon={faHeart}
+              icon={faPlus}
               color={"#dd7973"}
               onClick={onClick}
             />

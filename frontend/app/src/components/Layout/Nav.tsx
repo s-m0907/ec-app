@@ -28,7 +28,7 @@ const StyledNav = styled.div`
 `;
 
 const SignOut = styled.p`
-  background-color: #655ADB;
+  background-color: #655adb;
   color: white;
   padding: 0.4rem;
   border-radius: 2px;

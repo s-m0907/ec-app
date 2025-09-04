@@ -5,7 +5,7 @@ const ActionSection = styled.section`
   background-color: #f9f9f9;
   padding: 60px 20px;
   text-align: center;
-  color: #655ADB;
+  color: #655adb;
 `;
 
 const ActionTitle = styled.h2`
@@ -22,7 +22,7 @@ const ActionTitle = styled.h2`
 `;
 
 const ActionButton = styled(Link)`
-  background-color: #655ADB;
+  background-color: #655adb;
   color: white;
   padding: 10px 20px;
   border-radius: 6px;
@@ -48,7 +48,9 @@ const ActionButton = styled(Link)`
 const Action: React.FC = () => {
   return (
     <ActionSection>
-      <ActionTitle>Create an account to save your favorite artworks to exhibitions!</ActionTitle>
+      <ActionTitle>
+        Create an account to save your favorite artworks to exhibitions!
+      </ActionTitle>
       <ActionButton to="/sign-in" state={{ signingUp: true }}>
         Sign up
       </ActionButton>
