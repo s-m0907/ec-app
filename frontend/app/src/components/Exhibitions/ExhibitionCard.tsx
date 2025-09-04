@@ -7,7 +7,7 @@ import CardImage from "./CardImage";
 import Button from "../Common/Button";
 import Modal from "../Common/Modal";
 import EditExhibition from "./EditExhibition";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import Toast from "../Common/Toast";
 
 const Container = styled.div`
@@ -150,7 +150,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
         <ActionsBar>
           <Button
             label={"Edit Exhibition"}
-            icon={faPenToSquare}
+            icon={faEllipsis}
             onClick={() => handleOpenModal(exhibition)}
           />
         </ActionsBar>

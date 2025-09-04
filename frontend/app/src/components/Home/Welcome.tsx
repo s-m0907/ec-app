@@ -40,7 +40,7 @@ const WelcomeTitle = styled.h1`
 
 const WelcomeButton = styled(Link)`
   background-color: #fff;
-  border: solid #655ADB;
+  border: solid #655adb;
   color: black;
   padding: 10px 20px;
   border-radius: 6px;
@@ -50,7 +50,7 @@ const WelcomeButton = styled(Link)`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #655ADB;
+    background-color: #655adb;
   }
 
   @media (max-width: 768px) {
@@ -107,13 +107,15 @@ const Welcome: React.FC = () => {
         <InfoCard>
           <InfoCardTitle>Discover Art</InfoCardTitle>
           <InfoCardDescription>
-            Browse artwork from museum collections and search for artists, themes, materials and more.
+            Browse artwork from museum collections and search for artists,
+            themes, materials and more.
           </InfoCardDescription>
         </InfoCard>
         <InfoCard>
           <InfoCardTitle>Create Exhibitions</InfoCardTitle>
           <InfoCardDescription>
-            Add favorites to your own virtual exhibitions and learn more about each work.
+            Add favorites to your own virtual exhibitions and learn more about
+            each work.
           </InfoCardDescription>
         </InfoCard>
       </InfoGrid>
